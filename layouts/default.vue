@@ -60,6 +60,7 @@
         drawer: false,
         items: [
           { icon: 'apps', title: 'Beranda', to: '/' },
+          { icon: 'bubble_chart', title: 'Events', to: '/events' },
           { icon: 'bubble_chart', title: 'Kalender', to: '/inspire' },
           { icon: 'bubble_chart', title: 'Login', to: '/login' },
         ],
