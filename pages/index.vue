@@ -3,30 +3,23 @@
     <v-flex xs12 sm8 md6>
       <div class="text-xs-center">
         <logo/>
-        <vuetify-logo/>
       </div>
-      <v-card>
-        <v-card-title class="headline">Welcome to the Vuetify + Nuxt.js template</v-card-title>
-        <v-card-text>
-        </v-card-text>
-          <nuxt-link to="/login">Login</nuxt-link>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" flat nuxt to="/inspire">Continue</v-btn>
-        </v-card-actions>
-      </v-card>
+    </v-flex>
+    <v-flex xs12 sm6>
+      <h2 class="ma-4">Kegiatan Mozilla Indonesia Mendatang</h2>
+      <event-list/>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+import Logo from '~/components/Logo.vue';
+import EventList from '@/components/Events/EventList';
 
 export default {
   components: {
     Logo,
-    VuetifyLogo
+    EventList,
   }
 }
 </script>

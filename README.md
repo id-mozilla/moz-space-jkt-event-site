@@ -1,6 +1,6 @@
-# mozspace-nuxt
+# MozSpaceJKT Event Management
 
-> A Mozilla Community Space Project
+> A Mozilla Community Space Jakarta Project
 
 ## Build Setup
 

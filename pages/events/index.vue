@@ -2,18 +2,17 @@
   <v-layout>
     <v-flex xs12 sm6 offset-sm3>
       <h2 class="ma-4">Kegiatan Mozilla Indonesia Mendatang</h2>
-      <event-preview slug="moz-belajar-css-grid" title="MozBelajar CSS Grid" organization="Mozilla Indonesia" description="Anggap aja ini description dulu ya" />
-      <event-preview slug="moz-belajar-css-grid" title="MozBelajar CSS Grid" organization="Mozilla Indonesia" description="Anggap aja ini description dulu ya" />
+      <event-list/>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import EventPreview from '~/components/Events/EventPreview';
+import EventList from '~/components/Events/EventList';
 
 export default {
   components: {
-    EventPreview,
+    EventList,
   }
   
 }
