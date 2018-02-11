@@ -2,6 +2,7 @@
   <div>
     <event-preview v-for="event in events" 
       :key="event.id" 
+      :id="event.id"
       :slug="event.slug" 
       :title="event.title" 
       :organization="event.organization" 
