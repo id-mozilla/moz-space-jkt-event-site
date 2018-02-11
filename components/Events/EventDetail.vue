@@ -9,7 +9,7 @@
       </div>
     </v-card-title>
     <v-card-actions>
-      <v-btn flat color="orange" @click="$router.push('/events/' + slug)">Daftar</v-btn>
+      <v-btn flat color="orange">Daftar</v-btn>
       <v-btn flat color="orange">Bagikan</v-btn>
     </v-card-actions>
   </v-card>
@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: 'EventPreview',
+  name: 'EventDetail',
   props: {
     id: {
       type: String,

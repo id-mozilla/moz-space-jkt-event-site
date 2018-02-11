@@ -1,6 +1,11 @@
 <template>
   <div>
-    <event-preview slug="moz-belajar-css-grid" title="#MozBelajar CSS Grid" organization="Mozilla Indonesia" description="Anggap aja ini description dulu ya" />
+    <event-preview v-for="event in events" 
+      :key="event.id" 
+      :slug="event.slug" 
+      :title="event.title" 
+      :organization="event.organization" 
+      :description="event.description" />
   </div>  
 </template>
 
@@ -12,5 +17,11 @@ export default {
   components: {
     EventPreview,
   },
+  props: {
+    events: {
+      type: Array,
+      required: true,
+    }
+  }
 }
 </script>
