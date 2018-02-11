@@ -1,3 +1,6 @@
 <template>
-  <h1>Duh, error uey! balik.. balik.</h1>
+  <div>
+    <h1>Duh, error uey! </h1>
+    <a href="/">Balik ke laptop</a>
+  </div>
 </template>

@@ -5,6 +5,9 @@
 ## Build Setup
 
 ``` bash
+# copy env axample
+$ cp .env.example .env
+
 # install dependencies
 $ yarn install
 

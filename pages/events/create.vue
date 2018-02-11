@@ -21,14 +21,23 @@
           required
         ></v-text-field>
         <v-select
-          v-bind:items="items"
-          v-model="select"
+          v-bind:items="eventTypeOptions"
+          v-model="type"
           label="Tipe acara"
-          :error-messages="errors.collect('select')"
+          :error-messages="errors.collect('type')"
           v-validate="'required'"
-          data-vv-name="select"
+          data-vv-name="type"
           required
         ></v-select>
+        <v-text-field
+          name="input-7-1"
+          label="Deskripis acara"
+          v-model="description"
+          :error-messages="errors.collect('description')"
+          v-validate="'required'"
+          data-vv-name="description"
+          multi-line
+        ></v-text-field>
         <v-checkbox
           v-model="checkbox"
           value="1"
@@ -46,28 +55,49 @@
 </template>
 
 <script>
+import db from '@/configs/firebase-setup'
+
 export default {
   $validates: true,
+  name: 'CreateEvent',
   data () {
     return {
-      name: '',
+      pic: '',
       email: '',
-      select: null,
-      items: [
+      type: null,
+      eventTypeOptions: [
         'Developer Event',
         'Non-Developer Event',
       ],
-      checkbox: null
+      checkbox: null,
+      description: '',
     }
   },
   methods: {
     submit () {
-      this.$validator.validateAll()
+      if (this.$validator.validateAll()) {
+        db.collection('events').add({
+          pic: this.pic,
+          description: this.description,
+          email: this.email,
+        }).then(docRef => {
+          console.log('new docRef : ', docRef.id);
+          this.$router.push({
+            path: '/events/thanks',
+            query: {
+              name: this.pic,
+              email: this.email,
+            }
+          })
+        }).catch(err => {
+          console.log('error when create event : ', err)
+        })
+      }
     },
     clear () {
-      this.name = ''
+      this.pic = ''
       this.email = ''
-      this.select = null
+      this.type = null
       this.checkbox = null
       this.$validator.reset()
     }

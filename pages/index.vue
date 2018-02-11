@@ -8,8 +8,10 @@
     <v-flex xs12 sm6>
       <h2 class="ma-4" align-center>Kegiatan Mozilla Indonesia Mendatang {{ month }} </h2>
       <event-list :events="loadedEvents"/>
-      <h4 class="text-xs-center">tidak ada yang menarik ?</h4>
-      <v-btn small @click="$router.push('/events/create')">Selenggarakan acaramu sendiri</v-btn>
+      <div class="text-xs-center">
+        <h4 class="text-xs-center">tidak ada yang menarik ?</h4>
+        <v-btn small color="secondary" @click="$router.push('/events/create')">Selenggarakan acaramu sendiri</v-btn>
+      </div>
     </v-flex>
   </v-layout>
 </template>
