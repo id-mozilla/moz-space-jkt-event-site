@@ -9,7 +9,7 @@
       </div>
     </v-card-title>
     <v-card-actions>
-      <v-btn flat color="orange" @click="$router.push('/events/' + slug)">Daftar</v-btn>
+      <v-btn flat color="secondary" @click="$router.push('/events/' + slug)">Daftar</v-btn>
       <v-btn flat color="orange">Bagikan</v-btn>
     </v-card-actions>
   </v-card>
