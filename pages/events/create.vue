@@ -163,7 +163,6 @@
 </template>
 
 <script>
-import db from '@/configs/firebase-setup'
 import TermCondition from '@/components/Events/TermCondition'
 
 export default {
@@ -206,33 +205,6 @@ export default {
   },
   methods: {
     submit () {
-      if (this.$validator.validateAll()) {
-        db.collection('events').add({
-          pic: this.pic,
-          description: this.description,
-          email: this.email,
-        }).then(docRef => {
-          console.log('new docRef : ', docRef.id);
-          this.$router.push({
-            path: '/events/thanks',
-            query: {
-              name: this.pic,
-              email: this.email,
-            }
-          })
-        }).catch(err => {
-          console.log('error when create event : ', err)
-        })
-      }
-    },
-    clear () {
-      this.pic = ''
-      this.email = ''
-      this.phone = ''
-      this.organization = ''
-      this.type = null
-      this.checkbox = null
-      this.$validator.reset()
     },
     allowedDates(val) {
       return parseInt(val.split('-')[2], 10) % 2 === 0
