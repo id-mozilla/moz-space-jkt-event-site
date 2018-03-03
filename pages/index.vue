@@ -23,7 +23,7 @@ import EventList from '@/components/Events/EventList';
 export default {
   data() {
     return {
-      month: 'Februari'
+      month: 'Maret'
     }
   },
   computed: {

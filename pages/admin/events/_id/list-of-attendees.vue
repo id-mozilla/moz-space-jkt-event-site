@@ -50,11 +50,30 @@
         ></v-select>
         <v-btn block @click="submit" color="primary" class="mt-3">Saya Hadir</v-btn>
       </form>
+      <v-dialog v-model="successDialog" persistent max-width="290">
+        <v-card>
+          <v-card-title class="headline">Sudah masuk absensi</v-card-title>
+          <div class="text-xs-center">
+            <logo/>
+          </div>
+          <v-card-text>
+            <p class="text-xs-center">
+              Selamat belajar dan bersenang-senang di Mozilla Community Space ya!
+            </p>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="green darken-1" flat @click.native="successDialog = false">Ok, lanjut absen temennya</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
+import Logo from '~/components/Logo.vue';
+
 export default {
   $_veeValidate: {
     validator: 'new'
@@ -62,6 +81,7 @@ export default {
   data() {
     return {
       event: {},
+      successDialog: false,
       name: '',
       occupation: '',
       occupationOptions: [
@@ -113,6 +133,7 @@ export default {
            yearOfBirth: this.yearOfBirth,
          }).then(result => {
            console.log('result : ', result)
+           this.successDialog = true
            this.clearForm()
          }).catch(err => {
            console.log('error when trying to post participant', err)
@@ -126,6 +147,7 @@ export default {
       this.phone = ''
       this.gender = ''
       this.occupation = ''
+      this.$nextTick(() => this.$validator.reset())
     },
     fetchEventInformation(id) {
       this.$axios.$get(`/Events/${id}`).then(event => {
@@ -140,6 +162,9 @@ export default {
   },
   mounted() {
     this.$validator.localize('en', this.dictionary)
+  },
+  components: {
+    Logo,
   }
 }
 </script>
