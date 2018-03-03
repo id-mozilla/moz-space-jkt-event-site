@@ -1,8 +1,10 @@
 <template>
-  <v-layout column justify-center align-center>
+  <v-layout row justify-center align-center>
     <v-flex xs12 sm8 md8>
 
-      <h3>Absensi daftar hadir peserta</h3>
+      <h3 class="headline text-xs-center">Absensi daftar hadir peserta</h3>
+      <h4 class="title text-xs-center mt-3 orange--text" v-if="event">{{ event.title }}</h4>
+
       <form class="full pa-4">
         <v-text-field
           v-model="name"
@@ -46,7 +48,7 @@
           data-vv-name="gender"
           required
         ></v-select>
-        <v-btn @click="submit" color="primary">Saya Hadir</v-btn>
+        <v-btn block @click="submit" color="primary" class="mt-3">Saya Hadir</v-btn>
       </form>
     </v-flex>
   </v-layout>
@@ -59,6 +61,7 @@ export default {
   },
   data() {
     return {
+      event: {},
       name: '',
       occupation: '',
       occupationOptions: [
@@ -110,6 +113,7 @@ export default {
            yearOfBirth: this.yearOfBirth,
          }).then(result => {
            console.log('result : ', result)
+           this.clearForm()
          }).catch(err => {
            console.log('error when trying to post participant', err)
          })
@@ -122,7 +126,17 @@ export default {
       this.phone = ''
       this.gender = ''
       this.occupation = ''
+    },
+    fetchEventInformation(id) {
+      this.$axios.$get(`/Events/${id}`).then(event => {
+        this.event = event
+      }).catch(err => {
+        console.log('error when trying to get event detail information : ', err)
+      })
     }
+  },
+  created() {
+    this.fetchEventInformation(this.$route.params.id)
   },
   mounted() {
     this.$validator.localize('en', this.dictionary)
