@@ -141,7 +141,7 @@
                 item-text="name"
                 item-value="id"
                 return-object
-                :hint="`${roomType.name} untuk sekitar ${roomType.quantity} orang`"
+                :hint="`${roomType.name} untuk sekitar ${roomType.capacity} orang`"
                 required
               ></v-select>
               <v-text-field
