@@ -48,6 +48,11 @@
           data-vv-name="gender"
           required
         ></v-select>
+        <h4>Apakah kamu developer / programmer ?</h4>
+        <v-radio-group v-model="isDeveloper" :mandatory="false">
+          <v-radio label="Ya" value="true"></v-radio>
+          <v-radio label="Tidak" value="false"></v-radio>
+        </v-radio-group>
         <v-btn block @click="submit" color="primary" class="mt-3">Saya Hadir</v-btn>
       </form>
       <v-dialog v-model="successDialog" persistent max-width="290">
@@ -97,6 +102,7 @@ export default {
       ],
       email: '',
       phone: '',
+      isDeveloper: true,
       yearOfBirth: 0,
       dictionary: {
         custom: {
@@ -131,6 +137,7 @@ export default {
            email: this.email,
            phone: this.phone,
            yearOfBirth: this.yearOfBirth,
+           isDeveloper: this.isDeveloper,
          }).then(result => {
            console.log('result : ', result)
            this.successDialog = true
