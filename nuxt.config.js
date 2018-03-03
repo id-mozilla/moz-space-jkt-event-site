@@ -54,6 +54,7 @@ module.exports = {
   ** Axios module configuration
   */
   axios: {
+    baseURL: process.env.BASE_URL || 'http://wrong.url'
     // See https://github.com/nuxt-community/axios-module#options
   },
 
@@ -83,4 +84,7 @@ module.exports = {
       }
     }
   },
+  env: {
+    baseUrl: process.env.BASE_URL
+  }
 }
