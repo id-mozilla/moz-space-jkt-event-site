@@ -43,11 +43,11 @@
                 required
               ></v-text-field>
               <v-text-field
-                v-model="organization"
+                v-model="organizationName"
                 label="Nama Komunitas / Organisasi"
-                :error-messages="errors.collect('organization')"
+                :error-messages="errors.collect('organizationName')"
                 v-validate="'required'"
-                data-vv-name="organization"
+                data-vv-name="organizationName"
                 required
               ></v-text-field>
               <v-text-field
@@ -131,6 +131,19 @@
                 data-vv-name="type"
                 required
               ></v-select>
+              <v-select
+                v-bind:items="roomTypeOption"
+                v-model="roomType"
+                label="Tipe Ruangan"
+                :error-messages="errors.collect('roomType')"
+                v-validate="'required'"
+                data-vv-name="roomType"
+                item-text="name"
+                item-value="id"
+                return-object
+                :hint="`${roomType.name} untuk sekitar ${roomType.quantity} orang`"
+                required
+              ></v-select>
               <v-text-field
                 name="input-7-1"
                 label="Deskripis acara"
@@ -168,9 +181,12 @@ import TermCondition from '@/components/Events/TermCondition'
 export default {
   $validates: true,
   name: 'CreateEvent',
+  created() {
+    this.fetchRoomType()
+  },
   data () {
     return {
-      e1: 0,
+      e1: 3,
       date: null,
       dataMenu: false,
       timeMenu: false,
@@ -181,13 +197,14 @@ export default {
       startTime: null,
       durationOptions: [1, 2, 3, 4, 5, 6, 7],
       duration: 1,
-      organization: '',
+      organizationName: '',
       phone: '',
       type: null,
       isPaid: false,
       isProvidingFood: false,
       isNeedTable: false,
       roomTypeOption: [],
+      roomType: {},
       eventTypeOptions: [
         'Presentation',
         'Learning Session',
@@ -208,6 +225,14 @@ export default {
     },
     allowedDates(val) {
       return parseInt(val.split('-')[2], 10) % 2 === 0
+    },
+    fetchRoomType() {
+      this.$axios.$get('/RoomTypes').then(roomTypes => {
+        console.log('roomtypes : ', roomTypes)
+        this.roomTypeOption = roomTypes
+      }).catch(err => {
+        console.log('error when trying to get room types : ', err)
+      })
     }
   },
   components: {
