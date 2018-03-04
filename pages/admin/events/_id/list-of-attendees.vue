@@ -7,19 +7,21 @@
 
       <v-stepper v-model="attendeeStep" vertical class="mt-4">
         <v-stepper-step step="1" complete>
-          Sudah pernah kesini ?
+          Halo..
         </v-stepper-step>
         <v-stepper-content step="1">
-          
-          <v-btn color="primary" @click.native="attendeeStep = 2">Saya pernah kesini</v-btn>
+          <div class="text-xs-center">
+            <h2 class="subheading ma-3">Apakah kamu pernah kesini sebelumnya ?</h2>
+          </div>
+          <v-btn color="primary" @click.native="chooseFirstVisit(true)">Sudah</v-btn>
+          <v-btn color="primary" @click.native="chooseFirstVisit(false)">Belum</v-btn>
         </v-stepper-content>
-        <v-stepper-step step="2" complete>Isi data berikut ya</v-stepper-step>
+        <v-stepper-step step="2" complete>Isi formulir berikut ya</v-stepper-step>
         <v-stepper-content step="2">
-          <new-attendees-form></new-attendees-form>
+          <new-attendees-form v-if="isFirstVisit"></new-attendees-form>
+          <existing-attendees v-else></existing-attendees>
         </v-stepper-content>
       </v-stepper>
-
-      
       <v-dialog v-model="successDialog" persistent max-width="290">
         <v-card>
           <v-card-title class="headline">Sudah masuk absensi</v-card-title>
@@ -44,14 +46,16 @@
 <script>
 import Logo from '~/components/Logo.vue';
 import NewAttendeesForm from '~/components/ListOfAttendees/NewAttendeesForm';
+import ExistingAttendeesForm from '~/components/ListOfAttendees/ExistingAttendeesForm';
 
 export default {
+  name: 'ListOfAttendees',
   data() {
     return {
       event: {},
       successDialog: false,
       attendeeStep: 1,
-      firstVisit: true,
+      isFirstVisit: true,
     }
   },
   methods: {
@@ -61,6 +65,11 @@ export default {
       }).catch(err => {
         console.log('error when trying to get event detail information : ', err)
       })
+    },
+    chooseFirstVisit(isFirstVisit) {
+      console.log('first visit : ', isFirstVisit)
+      this.isFirstVisit = isFirstVisit
+      this.attendeeStep = 2
     }
   },
   created() {
@@ -69,6 +78,7 @@ export default {
   components: {
     Logo,
     NewAttendeesForm,
+    'existing-attendees': ExistingAttendeesForm,
   }
 }
 </script>

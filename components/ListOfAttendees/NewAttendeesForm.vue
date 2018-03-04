@@ -1,5 +1,5 @@
 <template>
-  <form class="full pa-4">
+  <form class="full">
     <v-text-field
       v-model="name"
       label="Nama kamu"
@@ -42,7 +42,7 @@
       data-vv-name="gender"
       required
     ></v-select>
-    <h4>Apakah kamu developer / programmer ?</h4>
+    <h4>Apakah kamu seorang developer / programmer ?</h4>
     <v-radio-group v-model="isDeveloper" :mandatory="false">
       <v-radio label="Ya" value="true"></v-radio>
       <v-radio label="Tidak" value="false"></v-radio>
@@ -55,7 +55,7 @@ export default {
   $_veeValidate: {
     validator: 'new'
   },
-    data() {
+  data() {
     return {
       name: '',
       occupation: '',
