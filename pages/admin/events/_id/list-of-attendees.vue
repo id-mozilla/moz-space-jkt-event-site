@@ -18,7 +18,7 @@
         </v-stepper-content>
         <v-stepper-step step="2" complete>Isi formulir berikut ya</v-stepper-step>
         <v-stepper-content step="2">
-          <new-attendees-form v-if="isFirstVisit"></new-attendees-form>
+          <new-attendees-form v-if="!isFirstVisit"></new-attendees-form>
           <existing-attendees v-else></existing-attendees>
         </v-stepper-content>
       </v-stepper>
@@ -67,7 +67,6 @@ export default {
       })
     },
     chooseFirstVisit(isFirstVisit) {
-      console.log('first visit : ', isFirstVisit)
       this.isFirstVisit = isFirstVisit
       this.attendeeStep = 2
     }
