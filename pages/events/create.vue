@@ -179,7 +179,9 @@
 import TermCondition from '@/components/Events/TermCondition'
 
 export default {
-  $validates: true,
+  $_veeValidate: {
+    validator: 'new',
+  },
   name: 'CreateEvent',
   created() {
     this.fetchRoomType()
@@ -202,7 +204,7 @@ export default {
       type: null,
       isPaid: false,
       isProvidingFood: false,
-      isNeedTable: false,
+      isUsingTable: false,
       roomTypeOption: [],
       roomType: {},
       eventTypeOptions: [
@@ -222,6 +224,37 @@ export default {
   },
   methods: {
     submit () {
+      this.$validator.validateAll().then(isFormValid => {
+        if (isFormValid) {
+          this.$axios.$post(`/Events`, {
+            pic: this.pic,
+            phone: this.phone,
+            email: this.email,
+            organizationName: this.organizationName,
+            title: this.title,
+            description: this.description,
+            type: this.type,
+            numberOfAttendees: this.numberOfAttendees,
+            isPaid: this.isPaid,
+            isUsingTable: this.isUsingTable,
+            isProvidingFood: this.isProvidingFood,
+            // WIP
+            numberOfAttendees: 10,
+            startDateTime: Date.now(),
+            endDateTime: Date.now()
+          }).then(result => {
+            this.$router.push({
+              name: 'events-thanks',
+              query: {
+                name: this.pic,
+                email: this.email,
+              }
+            }).catch(err => {
+              console.log('error when create event : ', err)
+            })
+          })
+        }
+      })
     },
     allowedDates(val) {
       return parseInt(val.split('-')[2], 10) % 2 === 0
@@ -237,6 +270,11 @@ export default {
   },
   components: {
     TermCondition,
+  },
+  computed: {
+    whenTheEventEnd() {
+      return 0;
+    }
   }
 }
 </script>
