@@ -60,7 +60,7 @@ export default {
       name: '',
       occupation: '',
       occupationOptions: [
-        'Berkerja',
+        'Bekerja',
         'Kuliah',
         'Pelajar',
         'Lainnya'
@@ -110,7 +110,7 @@ export default {
            isDeveloper: this.isDeveloper,
          }).then(result => {
            console.log('result : ', result)
-           this.successDialog = true
+           this.$emit('success')
            this.clearForm()
          }).catch(err => {
            console.log('error when trying to post participant', err)

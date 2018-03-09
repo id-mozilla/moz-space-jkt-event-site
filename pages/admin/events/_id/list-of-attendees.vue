@@ -18,8 +18,8 @@
         </v-stepper-content>
         <v-stepper-step step="2" complete>Isi formulir berikut ya</v-stepper-step>
         <v-stepper-content step="2">
-          <new-attendees-form v-if="!isFirstVisit"></new-attendees-form>
-          <existing-attendees v-else></existing-attendees>
+          <new-attendees-form v-if="!isFirstVisit" @success="successFillTheForm"></new-attendees-form>
+          <existing-attendees v-else v-on:changeFirstTime="changeFirstTime" @success="successFillTheForm"></existing-attendees>
         </v-stepper-content>
       </v-stepper>
       <v-dialog v-model="successDialog" persistent max-width="290">
@@ -69,6 +69,13 @@ export default {
     chooseFirstVisit(isFirstVisit) {
       this.isFirstVisit = isFirstVisit
       this.attendeeStep = 2
+    },
+    changeFirstTime() {
+      this.isFirstVisit = false;
+    },
+    successFillTheForm() {
+      this.successDialog = true;
+      this.attendeeStep = 1;
     }
   },
   created() {

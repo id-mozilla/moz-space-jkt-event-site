@@ -23,12 +23,20 @@
        color="primary" 
        class="mt-3" 
        v-if="isParticipanSelected">Ya, Saya Hadir</v-btn>
+    <div v-if="mayBeNewcomer">
+      <h3 class="subheading">Maaf, kami tak dapat menemukan namamu dibuku tamu. Silahkan isi data ya</h3>
+      <v-btn color="primary" @click="fillNewAttendeesForm()" class="mt-2">
+        Isi data diri
+      </v-btn>
+    </div>
   </div>
-  
 </template>
 <script>
 import ParticipantDetail from '~/components/ListOfAttendees/ParticipantDetail'
 export default {
+  $_veeValidate: {
+    validator: 'new',
+  },
   name: 'ExistingAttendeesForm',
   data() {
     return {
@@ -36,13 +44,17 @@ export default {
       participant: {},
       loading: false,
       search: null,
+      mayBeNewcomer: false,
     }
   },
   methods: {
     searchParticipant(name) {
       this.loading = true
-      this.$axios.$get(`/Participants?filter[where][name][like]=${name}`).then(participants => {
+      this.$axios.$get(`/Participants?filter[where][name][like]=${name}&filter[where][name][options]=i`).then(participants => {
         this.participants = participants
+        if (participants.length === 0) {
+          this.mayBeNewcomer = true
+        }
         this.loading = false
       }).catch(err => {
         console.log('error when trying to get part')
@@ -51,6 +63,22 @@ export default {
     },
     submit() {
       console.log('submited')
+      this.$validator.validateAll().then(isFormValid => {
+        if (isFormValid) {
+          this.$axios.$post('/ListOfAttendees', {
+            eventId: this.$route.params.id,
+            participantId: this.participant.id,
+          }).then(result => {
+            console.log('result : ', result)
+            this.$emit('success')
+          }).catch(err => {
+            console.log('err when submit attendees : ', err)
+          })
+        }
+      })
+    },
+    fillNewAttendeesForm() {
+      this.$emit('changeFirstTime')
     }
   },
   computed: {
