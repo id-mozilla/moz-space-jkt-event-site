@@ -32,7 +32,7 @@
             </div>
           </v-stepper-content>
           <v-stepper-content step="3">
-            <form class="full pa-4">
+            <form class="pa-4">
               <h3>Infomasi komunitas / organisasi</h3>
               <v-text-field
                 v-model="pic"
@@ -165,8 +165,6 @@
               ></v-checkbox>
               <v-btn @click="submit" color="primary">Kirim</v-btn>
             </form>
-            <v-btn color="secondary" @click.native="e1 = 1">Kirim</v-btn>
-
           </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
