@@ -168,7 +168,6 @@
           </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
-      
     </v-flex>
   </v-layout>
 </template>
