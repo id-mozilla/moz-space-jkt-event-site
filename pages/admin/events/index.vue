@@ -13,8 +13,8 @@
         <template slot="items" slot-scope="props">
           <td class="text-xs-right">{{ props.item.title }}</td>
           <td class="text-xs-right">{{ props.item.participants.length }}</td>
-          <td class="text-xs-right">{{ props.item.newParticipants }}</td>
-          <td class="text-xs-right">{{ props.item.existingParticipants }}</td>
+          <td class="text-xs-right">{{ props.item | participans('new') }}</td>
+          <td class="text-xs-right">{{ props.item | participans('old') }}</td>
           <td class="text-xs-right">{{ props.item.participants | developerCount }}</td>
         </template>
       </v-data-table>
@@ -50,8 +50,26 @@ export default {
     },
   },
   filters: {
-    newParticipans(participants) {
-      return participants.length;
+    participans(evn, type) {
+      const event = JSON.parse(JSON.stringify(evn))
+      const eventStartDateTime = new Date(event.startDateTime)
+      const operator = type === 'new' ? '>' : '<';
+
+      var operators = {
+        '>': function(a, b) { return a > b },
+        '<': function(a, b) { return a < b },
+      };
+
+      if (event && event.participants) {
+        const newPartcipants = event.participants.filter(participant => {
+          const participantJoined = new Date(participant.createdAt)
+          return operators[operator](eventStartDateTime.getTime(), participantJoined.getTime())
+        }).length;
+
+        return event.participants.length - newPartcipants; 
+      }
+
+      return 0;
     },
     developerCount(partcipants) {
       return partcipants.filter(participant => participant.isDeveloper).length;
