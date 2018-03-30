@@ -1,53 +1,13 @@
 <template>
-  <v-layout>
-        <div v-if="participant" class="pyro">
-          <div class="before"></div>
-          <div class="after"></div>
-        </div>
-    <v-flex xs12 class="text-xs-center">
-      <h2 class="heading ma-3">Selamat Datang di Mozilla Community Space</h2>
-
-      <v-layout>
-        <v-flex xs4>
-          <img src="~/assets/images/dimo-halo.png" 
-            class="logo"
-            style="max-height: 300px"
-            alt="Halo Dimo">
-        </v-flex>
-        <v-flex xs4 class="text-xs-center mt-5">
-          <h1 v-if="participant" class="display-2 mt-5">{{ participant }}</h1>
-          <h3 class="subheading mt-2">Selamat belajar dan bersenang-senang!</h3>
-        </v-flex>
-        <v-flex xs4 class="text-xs-center mt-5">
-          <img src="~/assets/images/dimo-hore.png" 
-            class="logo"
-            style="max-height: 250px"
-            alt="Halo Dimo">
-        </v-flex>
-      </v-layout>
-
-    </v-flex>
-  </v-layout>
+    <div class="pyro">
+      <div class="before"></div>
+      <div class="after"></div>
+    </div>
 </template>
-
 <script>
-import socket from '~/plugins/socket-io'
-
-
 export default {
-  name: 'WelcomeToMozSpace',
-  beforeMount() {
-    socket.on('new-participant', (newParticipant) => {
-      this.participant = newParticipant;
-    })
-  },
-  data() {
-    return {
-      participant: "Diky Arga" 
-    }
-  }
+  name: 'spark'
 }
-
 </script>
 <style>
 body {
@@ -269,7 +229,4 @@ body {
   }
 }
 
-
 </style>
-
-
