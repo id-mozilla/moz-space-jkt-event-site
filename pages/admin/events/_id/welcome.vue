@@ -4,24 +4,29 @@
           <div class="before"></div>
           <div class="after"></div>
         </div>
-    <v-flex xs12 class="text-xs-center">
-      <h2 class="heading ma-3">Selamat Datang di Mozilla Community Space</h2>
+    <v-flex xs12 class="text-xs-center pa-5">
+      <h2 class="heading ma-5">Selamat Datang di <br> Mozilla Community Space Jakarta</h2>
 
       <v-layout>
         <v-flex xs4>
           <img src="~/assets/images/dimo-halo.png" 
-            class="logo"
-            style="max-height: 300px"
+            class="dimo-halo"
             alt="Halo Dimo">
         </v-flex>
         <v-flex xs4 class="text-xs-center mt-5">
-          <h1 v-if="participant" class="display-2 mt-5">{{ participant }}</h1>
-          <h3 class="subheading mt-2">Selamat belajar dan bersenang-senang!</h3>
+          <div v-if="showParticipant">
+            <h1  class="display-2 mt-5">{{ participant.name }}</h1>
+            <h3 class="subheading mt-3">Selamat belajar dan bersenang-senang!</h3>
+          </div>
+          <div v-else >
+            <h1 class="heading">" The internet is a global public resource that must remain open and accessible."</h1>
+            <h3 class="subheading mt-3">- Mozilla Manifesto</h3>
+          </div>
         </v-flex>
         <v-flex xs4 class="text-xs-center mt-5">
           <img src="~/assets/images/dimo-hore.png" 
-            class="logo"
-            style="max-height: 250px"
+            class="dimo-hore"
+            style="max-height: 350px;"
             alt="Halo Dimo">
         </v-flex>
       </v-layout>
@@ -39,17 +44,47 @@ export default {
   beforeMount() {
     socket.on('new-participant', (newParticipant) => {
       this.participant = newParticipant;
+      this.showParticipant = true
+      this.removeParticipant()
     })
+    socket.on('joined-participant', (newParticipant) => {
+      this.participant = newParticipant;
+      this.showParticipant = true
+      this.removeParticipant()
+    })
+  },
+  computed: {
   },
   data() {
     return {
-      participant: "Diky Arga" 
+      participant: null,
+      showParticipant: false,
     }
+  },
+  methods: {
+    removeParticipant() {
+      setTimeout(() => {
+        this.showParticipant = false
+      }, 30000);
+    },
   }
 }
 
 </script>
 <style>
+.dimo-halo{
+  max-height: 350px;
+  position: fixed;
+  bottom: 5px;
+  left: 50px;
+}
+
+.dimo-hore{
+  max-height: 300px;
+  position: fixed;
+  bottom: 5px;
+  right: 50px;
+}
 body {
   margin: 0;
   padding: 0;
@@ -59,8 +94,8 @@ body {
 
 .pyro > .before, .pyro > .after {
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   box-shadow: 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff, 0 0 #fff;
   -moz-animation: 1s bang ease-out infinite backwards, 1s gravity ease-in infinite backwards, 5s position linear infinite backwards;
