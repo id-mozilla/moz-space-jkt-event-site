@@ -13,6 +13,9 @@
           <img src="~/assets/images/dimo-halo.png" 
             class="dimo-halo"
             alt="Halo Dimo">
+          <img src="~/assets/images/dimo-rocket.png" 
+            class="dimo-rocket"
+            alt="Rocket Dimo">
         </v-flex>
         <v-flex xs6 class="text-xs-center mt-5">
           <div v-if="showParticipant">
@@ -94,6 +97,7 @@ export default {
     removeParticipant() {
       setTimeout(() => {
         this.showParticipant = false
+        this.participant = null
       }, 20000);
     },
   },
@@ -124,8 +128,26 @@ export default {
 .dimo-halo{
   max-height: 350px;
   position: fixed;
-  bottom: 5px;
+  bottom: 50px;
   left: 50px;
+}
+
+.dimo-rocket{
+  max-height: 350px;
+  position: fixed;
+  top: 50px;
+  left: 50px;
+  animation: bounce 3s ease-in-out forwards;
+  animation-iteration-count: infinite; 
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(50px);
+  }
 }
 
 .dimo-hore{
