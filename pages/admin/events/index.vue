@@ -16,6 +16,10 @@
           <td class="text-xs-right">{{ props.item | participans('new') }}</td>
           <td class="text-xs-right">{{ props.item | participans('old') }}</td>
           <td class="text-xs-right">{{ props.item.participants | developerCount }}</td>
+          <td class="text-xs-right">
+            <v-btn @click="goToAbsen(props.item.id)">Absen</v-btn>
+            <v-btn @click="goToWelcomeEvent(props.item.id)">Welcome</v-btn>
+          </td>
         </template>
       </v-data-table>
     </v-flex>
@@ -32,6 +36,7 @@ export default {
         { text: 'Partisipan Baru', value: 'newPartcipants' },
         { text: 'Partisipan Lama', value: 'existingPartcipants' },
         { text: 'Developer', value: 'developer' },
+        { text: 'Aksi', value: 'action' },
       ],
     }
   },
@@ -48,6 +53,22 @@ export default {
         console.log('error when : ', err)
       })
     },
+    goToAbsen(id) {
+      this.$router.push({
+        name: 'admin-events-id-list-of-attendees',
+        params: {
+          id,
+        }
+      })
+    },
+    goToWelcomeEvent(id) {
+      this.$router.push({
+        name: 'admin-events-id-welcome',
+        params: {
+          id,
+        }
+      })
+    }
   },
   filters: {
     participans(evn, type) {
