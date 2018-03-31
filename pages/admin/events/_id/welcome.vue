@@ -8,22 +8,39 @@
       <h2 class="heading ma-5">Selamat Datang di <br> Mozilla Community Space Jakarta</h2>
 
       <v-layout>
-        <v-flex xs4>
+
+        <v-flex xs3>
           <img src="~/assets/images/dimo-halo.png" 
             class="dimo-halo"
             alt="Halo Dimo">
         </v-flex>
-        <v-flex xs4 class="text-xs-center mt-5">
+        <v-flex xs6 class="text-xs-center mt-5">
           <div v-if="showParticipant">
             <h1  class="display-2 mt-5">{{ participant.name }}</h1>
             <h3 class="subheading mt-3">Selamat belajar dan bersenang-senang!</h3>
           </div>
-          <div v-else >
-            <h1 class="heading">" The internet is a global public resource that must remain open and accessible."</h1>
-            <h3 class="subheading mt-3">- Mozilla Manifesto</h3>
+          <div v-else>
+            <!-- hacky - need to be fixed -->
+            <div v-if="showTyping">
+              <vue-typer
+                :text='manifestos'
+                :repeat='Infinity'
+                :shuffle='false'
+                initial-action='typing'
+                :pre-type-delay='70'
+                :type-delay='70'
+                :pre-erase-delay='2000'
+                :erase-delay='550'
+                erase-style='select-all'
+                :erase-on-complete='false'
+                caret-animation='blink'
+              ></vue-typer>
+            </div>
+            <br>
+            <h3 class="heading mt-5">- Mozilla Manifesto</h3>
           </div>
         </v-flex>
-        <v-flex xs4 class="text-xs-center mt-5">
+        <v-flex xs3 class="text-xs-center mt-5">
           <img src="~/assets/images/dimo-hore.png" 
             class="dimo-hore"
             style="max-height: 350px;"
@@ -37,7 +54,6 @@
 
 <script>
 import socket from '~/plugins/socket-io'
-
 
 export default {
   name: 'WelcomeToMozSpace',
@@ -59,19 +75,52 @@ export default {
     return {
       participant: null,
       showParticipant: false,
+      manifestos: [
+        '1. Internet sebagai bagian yang melengkapi kehidupan modern, yang merupakan komponen utama dalam pendidikan, komunikasi, kolaborasi, bisnis, hiburan dan sosial yang seutuhnya.',
+        '2. Internet merupakan sumber daya masyarakat global yang harus tetap terbuka dan dapat diakses dengan mudah.',
+        '3. Internet harus memperkaya kehidupan setiap individu.',
+        '4. Keamanan dan privasi individu di Internet adalah bagian terpenting dan merupakan keharusan.',
+        '5. Setiap individu harus memiliki kemampuan untuk membentuk Internet dan pengalaman mereka sendiri.',
+        '6. Keefektifan Internet sebagai sumber daya publik tergantung dari inovasi dari interoperabilitas (protokol, format data, konten), dan desentralisasi partisipan di seluruh dunia.',
+        '7. Perangkat lunak bebas dan sumber terbuka mengenalkan perkembangan Internet sebagai sumber daya publik.',
+        '8. Proses transparan yang berbasis komunitas yang mempromosikan partisipasi, akuntabilitas, dan kepercayaan.',
+        '9. Keterlibatan komersil dalam pembangunan Internet memberikan banyak keuntungan; keseimbangan yang sangat penting antara keuntungan secara komersil dan manfaat publik.',
+        '10. Memperluas aspek keuntungan publik dari Internet sebagai tujuan penting, layak waktu, perhatian dan komitmen.'
+      ],
+      showTyping: false,
     }
   },
   methods: {
     removeParticipant() {
       setTimeout(() => {
         this.showParticipant = false
-      }, 30000);
+      }, 20000);
     },
+  },
+  mounted() {
+    setTimeout(() => {
+      this.showTyping = true;
+    }, 2500)
   }
 }
 
 </script>
 <style>
+.vue-typer {
+  font-family: monospace;
+  font-size: 30px;
+  word-break: break-all;
+}
+
+.vue-typer .custom.char {
+  color: #D4D4BD;
+  background-color: #1E1E1E;
+}
+
+.vue-typer .custom.caret {
+  display: none;
+}
+
 .dimo-halo{
   max-height: 350px;
   position: fixed;

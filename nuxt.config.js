@@ -38,7 +38,8 @@ module.exports = {
   */
   plugins: [
     '@/plugins/vuetify',
-    '@/plugins/vee-validate'
+    '@/plugins/vee-validate',
+    { src: '@/plugins/vue-typer', ssr: false}
   ],
 
   /*
