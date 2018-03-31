@@ -43,7 +43,7 @@ export default {
       participants: [],
       participant: {},
       loading: false,
-      search: null,
+      search: '',
       mayBeNewcomer: false,
     }
   },
@@ -58,7 +58,9 @@ export default {
         this.loading = false
       }).catch(err => {
         console.log('error when trying to get part')
+        this.mayBeNewcomer = true
         this.loading = false
+        this.resetForm()
       })
     },
     submit() {
@@ -70,15 +72,24 @@ export default {
             participantId: this.participant.id,
           }).then(result => {
             console.log('result : ', result)
+            this.resetForm()
             this.$emit('success')
           }).catch(err => {
             console.log('err when submit attendees : ', err)
+            this.resetForm()
           })
         }
       })
     },
     fillNewAttendeesForm() {
       this.$emit('changeFirstTime')
+      this.resetForm()
+    },
+    resetForm() {
+      console.log('reseting form')
+      this.search = ''
+      this.mayBeNewcomer = false
+      this.participant = {}
     }
   },
   computed: {
