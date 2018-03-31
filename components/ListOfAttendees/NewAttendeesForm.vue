@@ -48,6 +48,9 @@
       <v-radio label="Tidak" value="false"></v-radio>
     </v-radio-group>
     <v-btn large block @click="submit" color="primary" class="mt-3">Saya Hadir</v-btn>
+    <v-btn outline @click="fillExistingAttendeesForm()" class="mt-2">
+       Sepertinya sudah pernah isi. 
+    </v-btn>
   </form>
 </template>
 <script>
@@ -125,6 +128,9 @@ export default {
       this.gender = ''
       this.occupation = ''
       this.$nextTick(() => this.$validator.reset())
+    },
+    fillExistingAttendeesForm() {
+      this.$emit("changeSecondTime");
     },
   },
   mounted() {

@@ -28,83 +28,93 @@
       <v-btn color="primary" @click="fillNewAttendeesForm()" class="mt-2">
         Isi data diri
       </v-btn>
+
+
     </div>
+    <v-btn outline @click="fillNewAttendeesForm()" class="mt-2">
+       Sepertinya baru pertama kali. 
+    </v-btn>
   </div>
 </template>
 <script>
-import ParticipantDetail from '~/components/ListOfAttendees/ParticipantDetail'
+import ParticipantDetail from "~/components/ListOfAttendees/ParticipantDetail";
 export default {
   $_veeValidate: {
-    validator: 'new',
+    validator: "new"
   },
-  name: 'ExistingAttendeesForm',
+  name: "ExistingAttendeesForm",
   data() {
     return {
       participants: [],
       participant: {},
       loading: false,
-      search: '',
-      mayBeNewcomer: false,
-    }
+      search: "",
+      mayBeNewcomer: false
+    };
   },
   methods: {
     searchParticipant(name) {
-      this.loading = true
-      this.$axios.$get(`/Participants?filter[where][name][like]=${name}&filter[where][name][options]=i`).then(participants => {
-        this.participants = participants
-        if (participants.length === 0) {
-          this.mayBeNewcomer = true
-        }
-        this.loading = false
-      }).catch(err => {
-        console.log('error when trying to get part')
-        this.mayBeNewcomer = true
-        this.loading = false
-        this.resetForm()
-      })
+      this.loading = true;
+      this.$axios
+        .$get(
+          `/Participants?filter[where][name][like]=${name}&filter[where][name][options]=i`
+        )
+        .then(participants => {
+          this.participants = participants;
+          if (participants.length === 0) {
+            this.mayBeNewcomer = true;
+          }
+          this.loading = false;
+        })
+        .catch(err => {
+          console.log("error when trying to get part");
+          this.mayBeNewcomer = true;
+          this.loading = false;
+        });
     },
     submit() {
-      console.log('submited')
+      console.log("submited");
       this.$validator.validateAll().then(isFormValid => {
         if (isFormValid) {
-          this.$axios.$post('/ListOfAttendees', {
-            eventId: this.$route.params.id,
-            participantId: this.participant.id,
-          }).then(result => {
-            console.log('result : ', result)
-            this.resetForm()
-            this.$emit('success')
-          }).catch(err => {
-            console.log('err when submit attendees : ', err)
-            this.resetForm()
-          })
+          this.$axios
+            .$post("/ListOfAttendees", {
+              eventId: this.$route.params.id,
+              participantId: this.participant.id
+            })
+            .then(result => {
+              this.resetForm();
+              this.$emit("success");
+            })
+            .catch(err => {
+              console.log("err when submit attendees : ", err);
+              this.resetForm();
+            });
         }
-      })
+      });
     },
     fillNewAttendeesForm() {
-      this.$emit('changeFirstTime')
-      this.resetForm()
+      this.$emit("changeFirstTime");
+      this.resetForm();
     },
     resetForm() {
-      console.log('reseting form')
-      this.search = ''
-      this.mayBeNewcomer = false
-      this.participant = {}
+      this.search = "";
+      this.mayBeNewcomer = false;
+      this.participant = {};
     }
   },
   computed: {
     isParticipanSelected() {
-      return Object.keys(this.participant).length > 0
+      return Object.keys(this.participant).length > 0;
     }
   },
   watch: {
     search(name) {
-      name && this.searchParticipant(name)
+      name && this.searchParticipant(name);
     }
   },
   components: {
-    ParticipantDetail,
+    ParticipantDetail
   }
-}
+};
 </script>
 

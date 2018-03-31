@@ -13,13 +13,14 @@
           <div class="text-xs-center">
             <h2 class="subheading ma-3">Apakah kamu pernah kesini sebelumnya ?</h2>
           </div>
-          <v-btn color="primary" @click.native="chooseFirstVisit(true)">Sudah</v-btn>
-          <v-btn color="primary" @click.native="chooseFirstVisit(false)">Belum</v-btn>
+          <v-btn color="primary" @click.native="chooseFirstVisit(false)">Sudah</v-btn>
+          <v-btn color="primary" @click.native="chooseFirstVisit(true)">Belum</v-btn>
         </v-stepper-content>
         <v-stepper-step step="2" complete>Isi formulir berikut ya</v-stepper-step>
         <v-stepper-content step="2">
-          <new-attendees-form v-if="!isFirstVisit" @success="successFillTheForm"></new-attendees-form>
+          <new-attendees-form v-if="isFirstVisit" @success="successFillTheForm" @changeSecondTime="changeSecondTime"></new-attendees-form>
           <existing-attendees v-else v-on:changeFirstTime="changeFirstTime" @success="successFillTheForm"></existing-attendees>
+
         </v-stepper-content>
       </v-stepper>
       <v-dialog v-model="successDialog" persistent max-width="290">
@@ -71,7 +72,10 @@ export default {
       this.attendeeStep = 2
     },
     changeFirstTime() {
-      this.isFirstVisit = false;
+      this.isFirstVisit = true;
+    },
+    changeSecondTime() {
+      this.isFirstVisit = false; 
     },
     successFillTheForm() {
       this.successDialog = true;
