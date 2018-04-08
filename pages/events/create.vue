@@ -2,19 +2,22 @@
   <v-layout column justify-center align-center>
     <v-flex xs12 sm8 md8>
       <h2 class="ma-3 text-xs-center">Selanggarakan acara mu di MozSpaceJKT</h2>
-      <v-stepper v-model="e1">
+      <v-stepper v-model="step">
         <v-stepper-header>
-          <v-stepper-step step="1" :complete="e1 > 1">Membaca Ketentuan </v-stepper-step>
+          <v-stepper-step step="1" :complete="step > 1">Membaca Ketentuan </v-stepper-step>
           <v-divider></v-divider>
-          <v-stepper-step step="2" :complete="e1 > 2">Pastikan Jadwal Tersedia</v-stepper-step>
+          <v-stepper-step step="2" :complete="step > 2">Pastikan Jadwal Tersedia</v-stepper-step>
           <v-divider></v-divider>
-          <v-stepper-step step="3">Isi Formulir</v-stepper-step>
+          <v-stepper-step :complete="step > 3" step="3">Isi Data Komunitas</v-stepper-step>
+          <v-divider></v-divider>
+          <v-stepper-step step="4">Isi Formulir</v-stepper-step>
         </v-stepper-header>
         <v-stepper-items>
+          <v-progress-linear v-if="isLoading" :indeterminate="true"></v-progress-linear>
           <v-stepper-content step="1">
             <term-condition></term-condition> 
             <div class="text-xs-right">
-              <v-btn large color="secondary" @click.native="e1 = 2">Selanjutnya</v-btn>
+              <v-btn large color="secondary" @click.native="nextStep()">Selanjutnya</v-btn>
             </div>
           </v-stepper-content>
           <v-stepper-content step="2">
@@ -27,45 +30,28 @@
               ></v-date-picker>
 
             <div class="text-xs-right">
-              <v-btn flat @click.native="e1 = 1">Kembali</v-btn>
-              <v-btn large color="secondary" @click.native="e1 = 3">Selanjutnya</v-btn>
+              <v-btn flat @click.native="step = 1">Kembali</v-btn>
+              <v-btn large color="secondary" @click.native="nextStep()">Selanjutnya</v-btn>
             </div>
           </v-stepper-content>
           <v-stepper-content step="3">
+            <div class="text-xs-center">
+              <h2 class="heading ma-3">Apakah komunitasmu pernah mengadakan acara disini ?</h2>
+              <v-btn outline @click.native="chooseFirstTime(false)">Sudah Pernah</v-btn>
+              <v-btn outline @click.native="chooseFirstTime(true)">Belum Pernah</v-btn>
+            </div>
+
+            <new-organization-form v-if="isOrganizationOptionChoosed && isFristTime" 
+              ref="newOrganizationForm"
+              @organizationFormSubmitted="handleOrganizationFormAfterSubmit"
+              @startLoading="isLoading = true"></new-organization-form>
+            <div class="text-xs-right">
+              <v-btn flat @click.native="step = 2">Kembali</v-btn>
+              <v-btn large color="secondary" @click.native="submitOrganizationForm">Selanjutnya</v-btn>
+            </div>
+          </v-stepper-content>
+          <v-stepper-content step="4">
             <form class="pa-4">
-              <h3>Infomasi komunitas / organisasi</h3>
-              <v-text-field
-                v-model="pic"
-                label="Atas Nama Penanggung Jawab"
-                :error-messages="errors.collect('pic')"
-                v-validate="'required'"
-                data-vv-name="pic"
-                required
-              ></v-text-field>
-              <v-text-field
-                v-model="organizationName"
-                label="Nama Komunitas / Organisasi"
-                :error-messages="errors.collect('organizationName')"
-                v-validate="'required'"
-                data-vv-name="organizationName"
-                required
-              ></v-text-field>
-              <v-text-field
-                v-model="email"
-                label="E-mail"
-                :error-messages="errors.collect('email')"
-                v-validate="'required|email'"
-                data-vv-name="email"
-                required
-              ></v-text-field>
-              <v-text-field
-                v-model="phone"
-                label="Nomor Telfon / Whatsapp"
-                :error-messages="errors.collect('phone')"
-                v-validate="'required'"
-                data-vv-name="phone"
-                required
-              ></v-text-field>
               <h3>Informasi acara</h3>
               <v-text-field
                 v-model="title"
@@ -174,6 +160,7 @@
 
 <script>
 import TermCondition from '@/components/Events/TermCondition'
+import NewOrganizationForm from '@/components/Events/Create/NewOrganizationForm'
 
 export default {
   $_veeValidate: {
@@ -185,19 +172,18 @@ export default {
   },
   data () {
     return {
-      e1: 3,
+      step: 3,
+      isFristTime: true,
+      isOrganizationOptionChoosed: false,
+      isLoading: false,
       date: null,
-      dataMenu: false,
-      timeMenu: false,
-      pic: '',
-      email: '',
       title: '',
+      dateMenu: false,
+      timeMenu: false,
       numberOfAttendees: 0,
       startTime: null,
       durationOptions: [1, 2, 3, 4, 5, 6, 7],
       duration: 1,
-      organizationName: '',
-      phone: '',
       type: null,
       isPaid: false,
       isProvidingFood: false,
@@ -213,10 +199,7 @@ export default {
       ],
       checkbox: null,
       description: '',
-      website: '',
-      fb: '',
-      twitter: '',
-      instagram: '',
+      organizationId: ''
     }
   },
   methods: {
@@ -227,7 +210,6 @@ export default {
             pic: this.pic,
             phone: this.phone,
             email: this.email,
-            organizationName: this.organizationName,
             title: this.title,
             description: this.description,
             type: this.type,
@@ -258,20 +240,40 @@ export default {
     },
     fetchRoomType() {
       this.$axios.$get('/RoomTypes').then(roomTypes => {
-        console.log('roomtypes : ', roomTypes)
         this.roomTypeOption = roomTypes
       }).catch(err => {
         console.log('error when trying to get room types : ', err)
       })
+    },
+    submitOrganizationForm() {
+      this.$refs.newOrganizationForm.submit()
+    },
+    handleOrganizationFormAfterSubmit() {
+      const newOrganizationId = this.$refs.newOrganizationForm.organizationId
+
+      if (newOrganizationId) {
+        this.organizationId = newOrganizationId
+        this.nextStep()
+      }
+
+      this.isLoading = false
+    },
+    chooseFirstTime(val) {
+      this.isOrganizationOptionChoosed = true
+      this.isFristTime = val
+    },
+    nextStep() {
+      this.step = this.step + 1
     }
   },
   components: {
     TermCondition,
+    NewOrganizationForm,
   },
   computed: {
     whenTheEventEnd() {
       return 0;
-    }
+    },
   }
 }
 </script>
