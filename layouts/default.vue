@@ -47,6 +47,13 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+    <v-snackbar
+      :color="notification.color"
+      multi-line
+      v-model="snackbarMessage"
+    >{{ notification.message }}
+      <v-btn dark flat @click="notificationToggle">Close</v-btn>
+    </v-snackbar>
     <v-footer app>
       <span>&copy; Mozilla Indonesia - 2018</span>
     </v-footer>
@@ -54,6 +61,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
   export default {
     data() {
       return {
@@ -71,7 +79,21 @@
         title: 'Mozilla Community Space Jakarta'
       }
     },
+    computed: {
+      ...mapState(['notification']),
+      snackbarMessage: {
+        get() {
+          return this.notification.active
+        },
+        set(val) {
+          this.notificationToggle()
+        }
+      }
+    },
     methods: {
+      notificationToggle() {
+        this.$store.dispatch('notify', { type: 'error', message: ''})
+      },
       goToHomepage() {
         console.log('lalalal');
       }

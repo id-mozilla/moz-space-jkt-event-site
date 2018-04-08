@@ -3,11 +3,21 @@ import Vuex from 'vuex';
 const CreateStore = () => {
   return new Vuex.Store({
     state: {
-      loadedEvents: []
+      loadedEvents: [],
+      notification: {
+        color: 'error',
+        active: false,
+        message: ''
+      }
     },
     mutations: {
       SET_EVENTS(state, events) {
         state.loadedEvents = events;
+      },
+      SET_NOTIFICATION(state, payload) {
+        state.notification.active = !state.notification.active
+        state.notification.message = payload.message
+        state.notification.color = payload.type
       }
     },
     actions: {
@@ -36,12 +46,15 @@ const CreateStore = () => {
       },
       setEvents(vuexCtx, events) {
         vuexCtx.commit('SET_EVENT', events);
+      },
+      notify(vuexCtx, payload) {
+        vuexCtx.commit('SET_NOTIFICATION', payload)
       }
     },
     getters: {
       loadedEvents(state) {
-          return state.loadedEvents;
-      }
+        return state.loadedEvents;
+      },
     }
   })
 }
