@@ -254,10 +254,14 @@ export default {
       })
     },
     submitOrganizationForm() {
-      this.$refs[this.organizationFormType.toString()].submit()
+      if (this.isOrganizationOptionChoosed && this.organizationFormType) {
+        this.$refs[this.organizationFormType.toString()].submit()
+      } else {
+        this.$store.dispatch('notify', { type: 'info', message: 'Isi data komunitas terlebih dahulu'})
+      }
     },
     handleOrganizationFormAfterSubmit() {
-      const newOrganizationId = this.$refs[this.organizationFormType.toString()].organizationId
+      const newOrganizationId = this.$refs[this.organizationFormType.toString()].organizationId || ''
 
       if (newOrganizationId) {
         this.organizationId = newOrganizationId
