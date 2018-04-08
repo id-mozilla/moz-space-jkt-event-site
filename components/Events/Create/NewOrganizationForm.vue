@@ -45,33 +45,29 @@
       v-model="website"
       label="Website"
       :error-messages="errors.collect('website')"
-      v-validate="'required'"
+      v-validate="''"
       data-vv-name="website"
-      required
     ></v-text-field>
     <v-text-field
       v-model="instagramLink"
-      label="Tautan Instagram"
+      label="Tautan Instagram, contoh : instagram.com/mozillaindonesia/"
       :error-messages="errors.collect('instagramLink')"
-      v-validate="'required'"
+      v-validate="''"
       data-vv-name="instagramLink"
-      required
     ></v-text-field>
     <v-text-field
       v-model="twitterLink"
-      label="Tautan Twitter"
+      label="Tautan Twitter, Contoh: twitter.com/ID_Mozilla "
       :error-messages="errors.collect('twitterLink')"
-      v-validate="'required'"
+      v-validate="''"
       data-vv-name="twitterLink"
-      required
     ></v-text-field>
     <v-text-field
       v-model="facebookLink"
       label="Tautan Facebook"
       :error-messages="errors.collect('facebookLink')"
-      v-validate="'required'"
+      v-validate="''"
       data-vv-name="facebookLink"
-      required
     ></v-text-field>
   </form>
 </template>
@@ -91,7 +87,7 @@ export default {
       twitterLink: '',
       facebookLink: '',
       description: '',
-      organizationId: '',
+      organizationId: '', // will be called from parent component
     }
   },
   methods: {

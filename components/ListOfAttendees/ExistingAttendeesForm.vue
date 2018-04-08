@@ -67,9 +67,9 @@ export default {
           this.loading = false;
         })
         .catch(err => {
-          console.log("error when trying to get part");
           this.mayBeNewcomer = true;
           this.loading = false;
+          this.$store.dispatch('notify', { type: 'error', message: err.message })
         });
     },
     submit() {

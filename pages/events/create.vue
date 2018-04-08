@@ -41,10 +41,17 @@
               <v-btn outline @click.native="chooseFirstTime(true)">Belum Pernah</v-btn>
             </div>
 
-            <new-organization-form v-if="isOrganizationOptionChoosed && isFristTime" 
+            <new-organization-form v-if="isOrganizationOptionChoosed && isFirstTime" 
               ref="newOrganizationForm"
               @organizationFormSubmitted="handleOrganizationFormAfterSubmit"
               @startLoading="isLoading = true"></new-organization-form>
+            <existing-organization-form v-if="isOrganizationOptionChoosed && !isFirstTime"
+              @startLoading="isLoading = true"
+              @organizationFormSubmitted="handleOrganizationFormAfterSubmit"
+              @changeNewOrganizationForm="isFirstTime = true"
+              ref="existingOrganizationForm">
+            </existing-organization-form>
+
             <div class="text-xs-right">
               <v-btn flat @click.native="step = 2">Kembali</v-btn>
               <v-btn large color="secondary" @click.native="submitOrganizationForm">Selanjutnya</v-btn>
@@ -161,6 +168,7 @@
 <script>
 import TermCondition from '@/components/Events/TermCondition'
 import NewOrganizationForm from '@/components/Events/Create/NewOrganizationForm'
+import ExistingOrganizationForm from '@/components/Events/Create/ExistingOrganizationForm'
 
 export default {
   $_veeValidate: {
@@ -173,7 +181,7 @@ export default {
   data () {
     return {
       step: 3,
-      isFristTime: true,
+      isFirstTime: true,
       isOrganizationOptionChoosed: false,
       isLoading: false,
       date: null,
@@ -229,7 +237,7 @@ export default {
                 email: this.email,
               }
             }).catch(err => {
-              console.log('error when create event : ', err)
+              this.$store.dispatch('notify', { type: 'error', message: err.message })
             })
           })
         }
@@ -242,14 +250,14 @@ export default {
       this.$axios.$get('/RoomTypes').then(roomTypes => {
         this.roomTypeOption = roomTypes
       }).catch(err => {
-        console.log('error when trying to get room types : ', err)
+        this.$store.dispatch('notify', { type: 'error', message: err.message })
       })
     },
     submitOrganizationForm() {
-      this.$refs.newOrganizationForm.submit()
+      this.$refs[this.organizationFormType.toString()].submit()
     },
     handleOrganizationFormAfterSubmit() {
-      const newOrganizationId = this.$refs.newOrganizationForm.organizationId
+      const newOrganizationId = this.$refs[this.organizationFormType.toString()].organizationId
 
       if (newOrganizationId) {
         this.organizationId = newOrganizationId
@@ -260,7 +268,7 @@ export default {
     },
     chooseFirstTime(val) {
       this.isOrganizationOptionChoosed = true
-      this.isFristTime = val
+      this.isFirstTime = val
     },
     nextStep() {
       this.step = this.step + 1
@@ -269,11 +277,15 @@ export default {
   components: {
     TermCondition,
     NewOrganizationForm,
+    ExistingOrganizationForm,
   },
   computed: {
     whenTheEventEnd() {
       return 0;
     },
+    organizationFormType() {
+      return this.isFirstTime ? 'newOrganizationForm' : 'existingOrganizationForm'
+    }
   }
 }
 </script>
