@@ -32,7 +32,7 @@
         required
         readonly
       ></v-text-field>
-      <v-date-picker v-model="date" no-title scrollable>
+      <v-date-picker v-model="date" no-title scrollable :min="minimumAllowedDates">
         <v-spacer></v-spacer>
         <v-btn flat color="primary" @click="dateMenu = false">Cancel</v-btn>
         <v-btn flat color="primary" @click="$refs.dateMenu.save(date)">OK</v-btn>
@@ -197,6 +197,9 @@ export default {
       const startDateTime = this.startDateTime
 
       return dayjs(startDateTime).add(this.duration, 'hour').toISOString()
+    },
+    minimumAllowedDates() {
+      return dayjs().add(1, 'day').format('YYYY-MM-DD');
     }
   },
   methods: {
