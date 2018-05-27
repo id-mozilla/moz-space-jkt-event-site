@@ -118,7 +118,6 @@ import { mapState, mapActions, mapGetters } from 'vuex'
         this.$store.dispatch('notify', { type: 'error', message: ''})
       },
       goToHomepage() {
-        console.log('go to homepage')
         this.$router.push({
           name: 'index',
         });

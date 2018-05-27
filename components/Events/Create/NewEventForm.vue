@@ -1,5 +1,5 @@
 <template>
-  <form class="pa-4">
+  <form class="">
     <h3>Informasi acara</h3>
     <v-text-field
       v-model="title"
@@ -26,6 +26,10 @@
         label="Tanggal Acara"
         v-model="date"
         prepend-icon="event"
+        :error-messages="errors.collect('date')"
+        v-validate="'required'"
+        data-vv-name="date"
+        required
         readonly
       ></v-text-field>
       <v-date-picker v-model="date" no-title scrollable>
@@ -52,16 +56,29 @@
         label="Pilih waktu mulai"
         v-model="startTime"
         prepend-icon="access_time"
+        :error-messages="errors.collect('startTime')"
+        v-validate="'required'"
+        data-vv-name="startTime"
+        required
         readonly
       ></v-text-field>
-      <v-time-picker v-model="startTime" @change="$refs.menu.save(startTime)"></v-time-picker>
+      <v-time-picker v-model="startTime" @change="$refs.menu.save(startTime)" format="24hr"></v-time-picker>
     </v-menu>
+    <v-select
+      v-bind:items="[1, 2, 3, 4, 5, 6, 7, 8]"
+      v-model="duration"
+      label="Durasi acara dalam hitungan jam"
+      :error-messages="errors.collect('duration')"
+      v-validate="'required'"
+      data-vv-name="duration"
+      required
+    ></v-select>
     <v-select
       v-bind:items="eventTypeOptions"
       v-model="eventType"
       label="Jenis acara"
-      :error-messages="errors.collect('eventType')"
       v-validate="'required'"
+      :error-messages="errors.collect('eventType')"
       data-vv-name="eventType"
       item-text="name"
       item-value="id"
@@ -90,16 +107,39 @@
       data-vv-name="description"
       multi-line
     ></v-text-field>
+    <h4>Centang checklist berikut sesuai acara mu :</h4>
+    <span >tidak perlu di centang jika tidak sesuai</span>
+    <v-checkbox
+      class="mt-2"
+      v-model="isUsingTable"
+      label="Acara ini memerlukan meja"
+      color="orange"
+      hide-details
+    ></v-checkbox>
+    <v-checkbox
+      v-model="isPaid"
+      label="Ini adalah acara berbayar"
+      color="orange"
+      hide-details
+    ></v-checkbox>
+    <v-checkbox
+      v-model="isProvidingFood"
+      label="Menyediakan makanan untuk peserta"
+      color="orange"
+      hide-details
+    ></v-checkbox>
     <v-text-field
+      class="mt-3"
       label="Estimasi jumlah peserta"
       v-model="numberOfAttendees"
       :error-messages="errors.collect('numberOfAttendees')"
-      v-validate="'numeric|required'"
+      v-validate="'numeric|required|min_value:1'"
       type="number"
       data-vv-name="numberOfAttendees"
     ></v-text-field>
     <v-checkbox
       v-model="agreeTermAndCondition"
+      value="true"
       label="Saya sudah membaca dan menyetujui perjajian"
       :error-messages="errors.collect('agreeTermAndCondition')"
       v-validate="'required'"
@@ -110,6 +150,8 @@
   </form>
 </template>
 <script>
+import dayjs from 'dayjs'
+
 export default {
   $_veeValidate: {
     validator: 'new'
@@ -128,12 +170,13 @@ export default {
       dateMenu: false,
       timeMenu: false,
       startTime: null,
+      duration: null,
       roomTypeOptions: [],
       eventTypeOptions: [],
       eventType: {},
       roomType: {},
       numberOfAttendees: 0,
-      agreeTermAndCondition: false,
+      agreeTermAndCondition: null,
       isPaid: false,
       isProvidingFood: false,
       isUsingTable: false,
@@ -143,11 +186,25 @@ export default {
     this.fetchRoomType()
     this.fetchEventType()
   },
+  computed: {
+    startDateTime() {
+      const [hour, minute] = this.startTime.split(':')
+      const [year, month, day] = this.date.split('-')
+
+      return dayjs(new Date(year, month, day, hour, minute)).toISOString()
+    },
+    endDateTime() {
+      const startDateTime = this.startDateTime
+
+      return dayjs(startDateTime).add(this.duration, 'hour').toISOString()
+    }
+  },
   methods: {
     submit() {
       this.$validator.validateAll().then(isFormValid => {
         if (isFormValid) {
           this.$emit('startLoading')
+
           this.$axios.$post('/Events', {
             organizationId: this.organization.id,
             eventTypeId: this.eventType.id,
@@ -157,9 +214,10 @@ export default {
             isPaid: this.isPaid,
             isUsingTable: this.isUsingTable,
             isProvidingFood: this.isProvidingFood,
-            numberOfAttendees: 10,
-            startDateTime: Date.now(),
-            endDateTime: Date.now()
+            numberOfAttendees: this.numberOfAttendees,
+            startDateTime: this.startDateTime, 
+            duration: this.duration,
+            endDateTime: this.endDateTime,
           }).then(res => {
             this.$emit('newEventCreated')
           }).catch(err => {
@@ -183,6 +241,6 @@ export default {
         this.$store.dispatch('notify', { type: 'error', message: err.message })
       })
     },
-  }
+  },
 }
 </script>
