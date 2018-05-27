@@ -51,6 +51,11 @@ module.exports = {
     '@nuxtjs/dotenv',
   ],
 
+  router: {
+    middleware: ['check-auth', 'redirect-to-dashboard']
+  },
+
+
   /*
   ** Axios module configuration
   */
