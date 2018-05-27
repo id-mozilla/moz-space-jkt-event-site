@@ -20,6 +20,29 @@
             <v-list-tile-title v-text="item.title"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <v-list-tile v-if="!isLogedIn" 
+                     router 
+                     :to="'/login'" 
+                     exact>
+          <v-list-tile-action>
+            <v-icon>account_box</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>
+              Masuk
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile v-else @click="logout" exact>
+          <v-list-tile-action>
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>
+              Keluar
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar fixed app>
@@ -32,21 +55,6 @@
         <nuxt />
       </v-container>
     </v-content>
-    <v-navigation-drawer
-      temporary
-      :right="right"
-      v-model="rightDrawer"
-      fixed
-    >
-      <v-list>
-        <v-list-tile @click.native="right = !right">
-          <v-list-tile-action>
-            <v-icon light>compare_arrows</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
     <v-snackbar
       :color="notification.color"
       multi-line
@@ -61,7 +69,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
   export default {
     data() {
       return {
@@ -71,7 +79,6 @@ import { mapState } from 'vuex'
           { icon: 'bubble_chart', title: 'Buat Acara', to: '/events/create' },
           { icon: 'bubble_chart', title: 'Events', to: '/events' },
           { icon: 'bubble_chart', title: 'Kalender', to: '/inspire' },
-          { icon: 'bubble_chart', title: 'Login', to: '/login' },
         ],
         miniVariant: false,
         right: true,
@@ -81,6 +88,7 @@ import { mapState } from 'vuex'
     },
     computed: {
       ...mapState(['notification']),
+      ...mapGetters(['isLogedIn']),
       snackbarMessage: {
         get() {
           return this.notification.active
@@ -91,11 +99,19 @@ import { mapState } from 'vuex'
       }
     },
     methods: {
+      ...mapActions(['logout']),
+      handleLogout() {
+        this.logout();
+        this.goToHomepage();
+      },
       notificationToggle() {
         this.$store.dispatch('notify', { type: 'error', message: ''})
       },
       goToHomepage() {
         console.log('lalalal');
+        this.$router.push({
+          name: 'index',
+        });
       }
     }
   }
