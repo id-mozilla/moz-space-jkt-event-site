@@ -43,7 +43,7 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-if="isLogedIn" @click="logout" exact>
+        <v-list-tile v-if="isLogedIn" @click="handleLogout" exact>
           <v-list-tile-action>
             <v-icon>exit_to_app</v-icon>
           </v-list-tile-action>
@@ -118,6 +118,7 @@ import { mapState, mapActions, mapGetters } from 'vuex'
         this.$store.dispatch('notify', { type: 'error', message: ''})
       },
       goToHomepage() {
+        console.log('go to homepage')
         this.$router.push({
           name: 'index',
         });

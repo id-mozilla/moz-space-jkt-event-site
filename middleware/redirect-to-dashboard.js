@@ -4,7 +4,7 @@ export default function({ store, route, redirect }) {
 
   pageNames.forEach(page => {
     if (store.getters.isLogedIn && page === route.name) {
-      redirect('/dashboard') 
+      redirect('/admin') 
     }
   })
 }

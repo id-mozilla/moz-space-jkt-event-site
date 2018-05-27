@@ -60,7 +60,7 @@ export default {
             })
             .then((isLoginSuccess) => {
               if (isLoginSuccess) {
-                return this.$router.push('dashboard');
+                return this.$router.push('/admin');
               }
             })
             .catch(err => {
