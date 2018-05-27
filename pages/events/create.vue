@@ -21,13 +21,7 @@
             </div>
           </v-stepper-content>
           <v-stepper-content step="2">
-              <v-date-picker
-                class="mt-3"
-                v-model="date"
-                min="2016-06-15"
-                max="2018-03-20"
-                :allowed-dates="allowedDates"
-              ></v-date-picker>
+            <iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=4no1lrkb7dauor7a8lhm0197gc%40group.calendar.google.com&amp;color=%23B1440E&amp;ctz=Asia%2FJakarta" mce_src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showNav=0&amp;showPrint=0&amp;showTabs=0&amp;showCalendars=0&amp;showTz=0&amp;height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=4no1lrkb7dauor7a8lhm0197gc%40group.calendar.google.com&amp;color=%23B1440E&amp;ctz=Asia%2FJakarta" style="border-width:0" mce_style="border-width:0" scrolling="no" width="100%" height="600" frameborder="0"></iframe>
 
             <div class="text-xs-right">
               <v-btn flat @click.native="step = 1">Kembali</v-btn>
