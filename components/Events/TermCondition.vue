@@ -10,12 +10,12 @@
         Untuk perlengkapan makan, kami menyediakan gelas plastik, sendok - garpu plastik, piring dan mangkok plastik sekali pakai yang dapat digunakan oleh peserta.</p>
     <h4>Ketentuan</h4>
     <ol>
-      <li>Kami memprioritaskan kegiatan komunitas Web Developer, terutama yang bersifat Open Source, atau yang sejalan dengan misi dan manifesto dari Mozilla. Selengkapnya https://www.mozilla.org/en-US/about/manifesto/</li>
-      <li>Kami membuka tempat kami sebagai basecamp atau markas, untuk kegiatan internal, meeting, talk & sharing, bagi komunitas-komunitas yang sejalan dengan visi misi dari Mozilla.</li>
-      <li>Kami tidak menerima permintaan penyelenggaraan kegiatan yang bersifat komersial, politik, atau SARA.</li>
-      <li>MozSpaceJKT hanya buka sampai 21.00 WIB. Bila ada perubahan atau penambahan waktu, mohon segera dikonfirmasikan kepada kami :)</li>
-      <li>Kami menyediakan berbagai macam minuman panas, dingin, dan dispenser, serta berbagai macam makanan ringan yang dapat dikonsumsi oleh peserta acara secara free flow dan gratis, karena merupakan bagian dari pelayanan MozSpaceJKT, namun kami tidak menyediakan makanan berat.</li>
-      <li>Dimohon untuk ikut memperhatikan kebersihan ruangan dan membuang sampah pada tempatnya.</li>
+      <li class="mb-2">Kami memprioritaskan kegiatan komunitas Web Developer, terutama yang bersifat Open Source, atau yang sejalan dengan misi dan manifesto dari Mozilla. Selengkapnya <a href="https://www.mozilla.org/en-US/about/manifesto/" target="_blank"> https://www.mozilla.org/en-US/about/manifesto/</a></li>
+      <li class="mb-2">Kami membuka tempat kami sebagai basecamp atau markas, untuk kegiatan internal, meeting, talk & sharing, bagi komunitas-komunitas yang sejalan dengan visi misi dari Mozilla.</li>
+      <li class="mb-2">Kami tidak menerima permintaan penyelenggaraan kegiatan yang bersifat komersial, politik, atau SARA.</li>
+      <li class="mb-2">MozSpaceJKT hanya buka sampai 21.00 WIB. Bila ada perubahan atau penambahan waktu, mohon segera dikonfirmasikan kepada kami :)</li>
+      <li class="mb-2">Kami menyediakan berbagai macam minuman panas, dingin, dan dispenser, serta berbagai macam makanan ringan yang dapat dikonsumsi oleh peserta acara secara free flow dan gratis, karena merupakan bagian dari pelayanan MozSpaceJKT, namun kami tidak menyediakan makanan berat.</li>
+      <li class="mb-2">Dimohon untuk ikut memperhatikan kebersihan ruangan dan membuang sampah pada tempatnya.</li>
     </ol>
     <p>
       Akun twitter kami @ID_Mozilla, akun instagram @mozillaindonesia dan Facebook page kami: https://www.facebook.com/MozillaIndonesia/ <br>
