@@ -52,7 +52,7 @@ module.exports = {
   ],
 
   router: {
-    middleware: ['check-auth', 'redirect-to-dashboard']
+    middleware: ['check-auth', 'redirect-to-dashboard', 'is-admin']
   },
 
 

@@ -33,7 +33,17 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-else @click="logout" exact>
+        <v-list-tile v-if="isLogedIn" @click="goToDashboard" exact>
+          <v-list-tile-action>
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>
+              Dashboard
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile v-if="isLogedIn" @click="logout" exact>
           <v-list-tile-action>
             <v-icon>exit_to_app</v-icon>
           </v-list-tile-action>
@@ -108,10 +118,14 @@ import { mapState, mapActions, mapGetters } from 'vuex'
         this.$store.dispatch('notify', { type: 'error', message: ''})
       },
       goToHomepage() {
-        console.log('lalalal');
         this.$router.push({
           name: 'index',
         });
+      },
+      goToDashboard() {
+        this.$router.push({
+          name: 'admin'
+        })
       }
     }
   }
