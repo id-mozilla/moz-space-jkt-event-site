@@ -58,15 +58,18 @@
     </v-menu>
     <v-select
       v-bind:items="eventTypeOptions"
-      v-model="type"
-      label="Tipe acara"
-      :error-messages="errors.collect('type')"
+      v-model="eventType"
+      label="Jenis acara"
+      :error-messages="errors.collect('eventType')"
       v-validate="'required'"
-      data-vv-name="type"
+      data-vv-name="eventType"
+      item-text="name"
+      item-value="id"
+      return-object
       required
     ></v-select>
     <v-select
-      v-bind:items="roomTypeOption"
+      v-bind:items="roomTypeOptions"
       v-model="roomType"
       label="Tipe Ruangan"
       :error-messages="errors.collect('roomType')"
@@ -125,15 +128,9 @@ export default {
       dateMenu: false,
       timeMenu: false,
       startTime: null,
-      type: null,
-      eventTypeOptions: [
-        'Presentation',
-        'Learning Session',
-        'Meeting',
-        'Hackathon',
-        'Looking Around'
-      ],
-      roomTypeOption: [],
+      roomTypeOptions: [],
+      eventTypeOptions: [],
+      eventType: {},
       roomType: {},
       numberOfAttendees: 0,
       agreeTermAndCondition: false,
@@ -144,6 +141,7 @@ export default {
   },
   created() {
     this.fetchRoomType()
+    this.fetchEventType()
   },
   methods: {
     submit() {
@@ -151,10 +149,10 @@ export default {
         if (isFormValid) {
           this.$emit('startLoading')
           this.$axios.$post('/Events', {
-            organization: this.organization.id,
+            organizationId: this.organization.id,
+            eventTypeId: this.eventType.id,
             title: this.title,
             description: this.description,
-            type: this.type,
             numberOfAttendees: this.numberOfAttendees,
             isPaid: this.isPaid,
             isUsingTable: this.isUsingTable,
@@ -173,7 +171,14 @@ export default {
     },
     fetchRoomType() {
       this.$axios.$get('/RoomTypes').then(roomTypes => {
-        this.roomTypeOption = roomTypes
+        this.roomTypeOptions = roomTypes
+      }).catch(err => {
+        this.$store.dispatch('notify', { type: 'error', message: err.message })
+      })
+    },
+    fetchEventType() {
+      this.$axios.$get('/EventTypes').then(eventTypes => {
+        this.eventTypeOptions = eventTypes
       }).catch(err => {
         this.$store.dispatch('notify', { type: 'error', message: err.message })
       })
