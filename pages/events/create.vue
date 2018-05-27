@@ -83,7 +83,7 @@ export default {
   name: 'CreateEvent',
   data () {
     return {
-      step: 4,
+      step: 1,
       isFirstTime: true,
       isOrganizationOptionChoosed: false,
       isLoading: false,
