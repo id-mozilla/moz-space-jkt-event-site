@@ -31,7 +31,7 @@ export default {
   $_veeValidate: {
     validator: "new"
   },
-  name: "ExistingAttendeesForm",
+  name: "ExistingOrganizationForm",
   data() {
     return {
       organizations: [],

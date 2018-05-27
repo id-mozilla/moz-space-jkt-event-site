@@ -87,7 +87,7 @@ export default {
       twitterLink: '',
       facebookLink: '',
       description: '',
-      organizationId: '', // will be called from parent component
+      organization: '', // will be called from parent component
     }
   },
   methods: {
@@ -106,7 +106,7 @@ export default {
             twitterLink: this.twitterLink,
             facebookLink: this.facebookLink
           }).then(res => {
-            this.organizationId = res.id
+            this.organization = res;
             this.$emit('organizationFormSubmitted')
           }).catch(err => {
             this.$store.dispatch('notify', { type: 'error', message: err.message })

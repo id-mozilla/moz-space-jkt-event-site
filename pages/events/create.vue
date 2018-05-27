@@ -58,106 +58,17 @@
             </div>
           </v-stepper-content>
           <v-stepper-content step="4">
-            <form class="pa-4">
-              <h3>Informasi acara</h3>
-              <v-text-field
-                v-model="title"
-                label="Judul Acara"
-                :error-messages="errors.collect('title')"
-                v-validate="'required'"
-                data-vv-name="title"
-                required
-              ></v-text-field>
-              <v-menu
-                ref="menu"
-                lazy
-                :close-on-content-click="false"
-                v-model="dateMenu"
-                transition="scale-transition"
-                offset-y
-                full-width
-                :nudge-right="40"
-                min-width="290px"
-                :return-value.sync="date"
-              >
-                <v-text-field
-                  slot="activator"
-                  label="Tanggal Acara"
-                  v-model="date"
-                  prepend-icon="event"
-                  readonly
-                ></v-text-field>
-                <v-date-picker v-model="date" no-title scrollable>
-                  <v-spacer></v-spacer>
-                  <v-btn flat color="primary" @click="dateMenu = false">Cancel</v-btn>
-                  <v-btn flat color="primary" @click="$refs.dateMenu.save(date)">OK</v-btn>
-                </v-date-picker>
-              </v-menu>
-              <v-menu
-                ref="menu"
-                lazy
-                :close-on-content-click="false"
-                v-model="timeMenu"
-                transition="scale-transition"
-                offset-y
-                full-width
-                :nudge-right="40"
-                max-width="290px"
-                min-width="290px"
-                :return-value.sync="startTime"
-              >
-                <v-text-field
-                  slot="activator"
-                  label="Pilih waktu mulai"
-                  v-model="startTime"
-                  prepend-icon="access_time"
-                  readonly
-                ></v-text-field>
-                <v-time-picker v-model="startTime" @change="$refs.menu.save(startTime)"></v-time-picker>
-              </v-menu>
-              <v-select
-                v-bind:items="eventTypeOptions"
-                v-model="type"
-                label="Tipe acara"
-                :error-messages="errors.collect('type')"
-                v-validate="'required'"
-                data-vv-name="type"
-                required
-              ></v-select>
-              <v-select
-                v-bind:items="roomTypeOption"
-                v-model="roomType"
-                label="Tipe Ruangan"
-                :error-messages="errors.collect('roomType')"
-                v-validate="'required'"
-                data-vv-name="roomType"
-                item-text="name"
-                item-value="id"
-                return-object
-                :hint="`${roomType.name} untuk sekitar ${roomType.capacity} orang`"
-                required
-              ></v-select>
-              <v-text-field
-                name="input-7-1"
-                label="Deskripis acara"
-                v-model="description"
-                :error-messages="errors.collect('description')"
-                v-validate="'required'"
-                data-vv-name="description"
-                multi-line
-              ></v-text-field>
-              <v-checkbox
-                v-model="checkbox"
-                value="1"
-                label="Saya sudah membaca dan menyetujui perjajian"
-                :error-messages="errors.collect('checkbox')"
-                v-validate="'required'"
-                data-vv-name="checkbox"
-                type="checkbox"
-                required
-              ></v-checkbox>
-              <v-btn @click="submit" color="primary">Kirim</v-btn>
-            </form>
+            <div v-if="isOrganizationFormFulfilled">
+              <new-event-form ref="createNewEventForm" :organization="organization" @newEventCreated="handleAfterEventCreated"></new-event-form>
+              <div class="text-xs-right">
+                <v-btn flat @click.native="step = 3">Kembali</v-btn>
+                <v-btn large color="secondary" @click.native="submitCreateEventForm">Kirim</v-btn>
+              </div>
+            </div>
+            <div v-else>
+              <h4>Mohon untuk mengisi data organisasi / komunitas terlebih dahulu</h4>
+              <v-btn color="secondary" @click.native="step = 3">Isi data komunitas</v-btn>
+            </div>
           </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
@@ -169,89 +80,38 @@
 import TermCondition from '@/components/Events/TermCondition'
 import NewOrganizationForm from '@/components/Events/Create/NewOrganizationForm'
 import ExistingOrganizationForm from '@/components/Events/Create/ExistingOrganizationForm'
+import NewEventForm from '@/components/Events/Create/NewEventForm'
 
 export default {
   $_veeValidate: {
     validator: 'new',
   },
   name: 'CreateEvent',
-  created() {
-    this.fetchRoomType()
-  },
   data () {
     return {
-      step: 3,
+      step: 4,
       isFirstTime: true,
       isOrganizationOptionChoosed: false,
       isLoading: false,
       date: null,
-      title: '',
-      dateMenu: false,
-      timeMenu: false,
-      numberOfAttendees: 0,
-      startTime: null,
       durationOptions: [1, 2, 3, 4, 5, 6, 7],
       duration: 1,
-      type: null,
-      isPaid: false,
-      isProvidingFood: false,
-      isUsingTable: false,
-      roomTypeOption: [],
-      roomType: {},
-      eventTypeOptions: [
-        'Presentation',
-        'Learning Session',
-        'Meeting',
-        'Hackathon',
-        'Looking Around'
-      ],
-      checkbox: null,
-      description: '',
-      organizationId: ''
+      organization: null,
     }
   },
   methods: {
-    submit () {
-      this.$validator.validateAll().then(isFormValid => {
-        if (isFormValid) {
-          this.$axios.$post(`/Events`, {
-            pic: this.pic,
-            phone: this.phone,
-            email: this.email,
-            title: this.title,
-            description: this.description,
-            type: this.type,
-            numberOfAttendees: this.numberOfAttendees,
-            isPaid: this.isPaid,
-            isUsingTable: this.isUsingTable,
-            isProvidingFood: this.isProvidingFood,
-            // WIP
-            numberOfAttendees: 10,
-            startDateTime: Date.now(),
-            endDateTime: Date.now()
-          }).then(result => {
-            this.$router.push({
-              name: 'events-thanks',
-              query: {
-                name: this.pic,
-                email: this.email,
-              }
-            }).catch(err => {
-              this.$store.dispatch('notify', { type: 'error', message: err.message })
-            })
-          })
+    handleAfterEventCreated () {
+      console.log('move to thanks please')
+      this.$router.push({
+        name: 'events-thanks',
+        query: {
+          name: this.organization.pic,
+          email: this.organization.email,
         }
       })
     },
     allowedDates(val) {
       return parseInt(val.split('-')[2], 10) % 2 === 0
-    },
-    fetchRoomType() {
-      this.$axios.$get('/RoomTypes').then(roomTypes => {
-        this.roomTypeOption = roomTypes
-      }).catch(err => {
-        this.$store.dispatch('notify', { type: 'error', message: err.message })
-      })
     },
     submitOrganizationForm() {
       if (this.isOrganizationOptionChoosed && this.organizationFormType) {
@@ -260,11 +120,14 @@ export default {
         this.$store.dispatch('notify', { type: 'info', message: 'Isi data komunitas terlebih dahulu'})
       }
     },
+    submitCreateEventForm() {
+      this.$refs.createNewEventForm.submit();
+    },
     handleOrganizationFormAfterSubmit() {
-      const newOrganizationId = this.$refs[this.organizationFormType.toString()].organizationId || ''
+      const newOrganization = this.$refs[this.organizationFormType.toString()].organization || ''
 
-      if (newOrganizationId) {
-        this.organizationId = newOrganizationId
+      if (newOrganization) {
+        this.organization = newOrganization
         this.nextStep()
       }
 
@@ -282,6 +145,7 @@ export default {
     TermCondition,
     NewOrganizationForm,
     ExistingOrganizationForm,
+    NewEventForm,
   },
   computed: {
     whenTheEventEnd() {
@@ -289,6 +153,9 @@ export default {
     },
     organizationFormType() {
       return this.isFirstTime ? 'newOrganizationForm' : 'existingOrganizationForm'
+    },
+    isOrganizationFormFulfilled() {
+      return this.organization !== null;
     }
   }
 }
