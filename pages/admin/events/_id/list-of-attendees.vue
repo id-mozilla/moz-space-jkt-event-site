@@ -51,6 +51,18 @@ import ExistingAttendeesForm from '~/components/ListOfAttendees/ExistingAttendee
 
 export default {
   name: 'ListOfAttendees',
+  asyncData({ $axios, params }) {
+    return new Promise((resolve, reject) => {
+      $axios.$get(`/Events/${params.id}`).then(res => {
+        resolve({ event: res })
+      }).catch(err => {
+        reject({
+          statusCode: err.status,
+          message: err.message,
+        })
+      })
+    })
+  },
   data() {
     return {
       event: {},
@@ -60,13 +72,6 @@ export default {
     }
   },
   methods: {
-    fetchEventInformation(id) {
-      this.$axios.$get(`/Events/${id}`).then(event => {
-        this.event = event
-      }).catch(err => {
-        console.log('error when trying to get event detail information : ', err)
-      })
-    },
     chooseFirstVisit(isFirstVisit) {
       this.isFirstVisit = isFirstVisit
       this.attendeeStep = 2
@@ -83,7 +88,6 @@ export default {
     }
   },
   created() {
-    this.fetchEventInformation(this.$route.params.id)
   },
   components: {
     Logo,
