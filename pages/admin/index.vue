@@ -1,11 +1,11 @@
 <template>
 <div>
- <v-layout>
-   <v-flex align-center justify-center>
+ <v-layout row wrap justify-center align-center>
+   <v-flex xs12>
       <h2 class="text-xs-center">Selamat datang Kiholder</h2>
    </v-flex>
  </v-layout>
-  <v-layout align-center justify-center>
+  <v-layout row wrap align-center justify-center>
     <v-flex xs12 
             sm6 
             md6>
