@@ -62,16 +62,50 @@
           <h2 class="title">{{ event.numberOfAttendees }} Orang</h2>
         </v-flex>
       </v-layout>
-      <v-layout row wrap justify-center align-center class="my-2">
+      <hr class="my-2">
+      <h3 class="subheading my-2">
+        <span class="black white--text pa-1">
+          Aksi
+        </span>
+      </h3>
+      <v-layout v-if="event.confirmed !== true" row wrap justify-center align-center class="my-2">
         <v-flex xs6>
-          <v-btn color="primary">Konfirmasi acara ini</v-btn>
+          <v-btn color="primary" @click="confirmDialog = true">Konfirmasi acara ini</v-btn>
         </v-flex>
       </v-layout>
+      <div v-else>
+        <v-layout row wrap justify-center align-center>
+          <v-flex xs12>
+            <h3>Acara telah di konfirmasi</h3>
+          </v-flex>
+        </v-layout>
+        <v-layout row wrap justify-center align-center class="my-2">
+          <v-flex xs6 sm6 md6>
+            <v-btn color="primary" @click="$router.push({ name: 'admin-events-id-list-of-attendees', params: { id: event.id }})">Absensi</v-btn>
+          </v-flex>
+          <v-flex xs6 sm6 md6>
+            <v-btn @click="$router.push({ name: 'admin-events-id-welcome', params: { id: event.id }})">Ucapan Selamat Datang</v-btn>
+          </v-flex>
+        </v-layout>
+      </div>
     </v-flex>
+    <v-dialog v-model="confirmDialog" persistent max-width="290">
+      <v-card>
+        <v-card-title class="headline">Apakah kamu yakin akan mengkonfirmasi acara ini</v-card-title>
+        <v-card-text>Yakin ya, kalo ragu tanya di group dulu deh mending :D</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" flat @click.native="confirmDialog = false">Batal</v-btn>
+          <v-btn color="green darken-1" flat @click.native="confirmEvent(event)">Yoi</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-layout>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   asyncData({ $axios, params }) {
     return new Promise((resolve, reject) => {
@@ -87,12 +121,28 @@ export default {
   },
   data() {
     return {
-      event: {}
+      event: {},
+      confirmDialog: false,
     }
   },
   created() {
   },
   methods: {
+    ...mapActions(['notify']),
+    confirmEvent(event) {
+      this.$axios.$patch(`/Events/${event.id}`, {
+        confirmed: true,
+      }).then(res => {
+        // notify success
+        this.confirmDialog = false;
+        this.event.confirmed = true;
+        this.notify({ type: 'success', message: 'Sukses konfirmasi acara'})
+      }).catch(err => {
+        // notify error
+        this.confirmDialog = false;
+        this.notify({ type: 'error', message: err.message })
+      })
+    }
   }
 }
 </script>
