@@ -94,7 +94,10 @@ export default {
     },
     goToEventDetail(event) {
       this.$router.push({
-        name: 'admin-events-id'
+        name: 'admin-events-id',
+        params: {
+          id: event.id,
+        },
       })
     }
   },
