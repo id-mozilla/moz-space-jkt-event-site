@@ -221,6 +221,7 @@ export default {
             startDateTime: this.startDateTime, 
             duration: this.duration,
             endDateTime: this.endDateTime,
+            confirmed: false,
           }).then(res => {
             this.$emit('newEventCreated')
           }).catch(err => {
