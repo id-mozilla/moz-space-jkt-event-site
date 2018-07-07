@@ -7,7 +7,7 @@
     </v-flex>
     <v-flex xs12 sm6>
       <h2 class="ma-4" align-center>Kegiatan Mozilla Indonesia Mendatang {{ month }} </h2>
-      <event-list :events="loadedEvents"/>
+      <event-list :events="events"/>
       <div class="text-xs-center">
         <h4 class="text-xs-center">tidak ada yang menarik ?</h4>
         <v-btn small color="secondary" @click="$router.push('/events/create')">Selenggarakan acaramu sendiri</v-btn>
@@ -19,16 +19,31 @@
 <script>
 import Logo from '~/components/Logo.vue';
 import EventList from '@/components/Events/EventList';
+import qs from 'qs';
 
 export default {
+  asyncData({ $axios }) {
+    return new Promise((resolve, reject) => {
+      const requestParams = {
+        filter: {
+          where: {
+            confirmed: true,
+          }
+        }
+      }
+
+      $axios.$get(`/Events?${qs.stringify(requestParams)}`).then(res => resolve({events: res})).catch(err => {
+        reject({
+          statusCode: err.status,
+          message: err.message,
+        })
+      })
+    })
+  },
   data() {
     return {
-      month: 'Maret'
-    }
-  },
-  computed: {
-    loadedEvents() {
-      return this.$store.getters.loadedEvents;
+      month: 'Maret',
+      events: [],
     }
   },
   components: {
