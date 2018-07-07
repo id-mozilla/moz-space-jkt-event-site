@@ -20,6 +20,7 @@
     "express": "^4.15.3",
     "js-cookie": "^2.2.0",
     "nuxt": "^1.0.0",
+    "qs": "^6.5.2",
     "socket.io-client": "^2.1.0",
     "vee-validate": "^2.0.9",
     "vue-typer": "^1.2.0",
