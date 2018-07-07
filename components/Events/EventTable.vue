@@ -6,7 +6,7 @@
         <v-spacer/>
         <v-text-field
           append-icon="search"
-          label="Cari"
+          label="Cari..."
           single-line
           hide-details
           v-model="searchKeyword"
@@ -42,10 +42,18 @@
 </template>
 <script>
 import { mapState, mapActions } from 'vuex';
+import qs from 'qs';
 
 export default {
   props: {
     title: String,
+    confirmed: {
+      type: Boolean,
+      required: false,
+      default() {
+        return true;
+      },
+    },
   },
   data: () => {
     return {
@@ -77,8 +85,22 @@ export default {
 
       this.loading = true;
 
+      const params = {
+        filter: {
+          limit,
+          skip,
+          where: {
+            title: {
+              like: keyword,
+              options: 'i',
+            },
+            confirmed: this.confirmed,
+          }
+        }
+      }
+
       this.$axios
-        .$get(`/Events?filter[limit]=${limit}&filter[skip]=${skip}&filter[where][title][like]=${keyword}&filter[where][title][options]=i`)
+        .$get(`/Events?${qs.stringify(params)}`)
         .then(response => {
           this.loading = false;
           this.items = response;

@@ -13,6 +13,7 @@
     </v-flex>
     <v-flex xs12 sm6 md6>
       <h3>event belum di konfirmasi</h3>
+      <event-table title="Event belum terkonfimrasi" :confirmed="false"></event-table>
     </v-flex>
   </v-layout>
 </div>
