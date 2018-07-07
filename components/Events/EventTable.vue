@@ -23,8 +23,8 @@
         class="elevation-1">
         <template slot="items" slot-scope="props">
           <td>{{ props.item.title }}</td>
-          <td>{{ props.item.startDateTime }}</td>
-          <td>{{ props.item.timeStart }}</td>
+          <td>{{ props.item.startDateTime | showDateTime }}</td>
+          <td>{{ props.item.eventType.name }}</td>
           <td>
             <v-btn color="primary" @click="goToEventDetail(props.item)">Lihat</v-btn>
           </td>
@@ -43,6 +43,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import qs from 'qs';
+import dayjs from 'dayjs';
 
 export default {
   props: {
@@ -68,7 +69,7 @@ export default {
       headers: [
         { text: 'Judul Acara', value: 'title' },
         { text: 'Tanggal', value: 'startDateTime' },
-        { text: 'Waktu', value: 'timeStart' },
+        { text: 'Jenis', value: 'eventType' },
         { text: 'Aksi', value: '' },
       ],
     };
@@ -95,7 +96,8 @@ export default {
               options: 'i',
             },
             confirmed: this.confirmed,
-          }
+          },
+          include: ['eventType']
         }
       }
 
@@ -121,7 +123,12 @@ export default {
           id: event.id,
         },
       })
-    }
+    },
+  },
+  filters: {
+    showDateTime(date) {
+      return dayjs(date).format('DD-MM-YYYY : HH:mm')
+    },
   },
   computed: {
     ...mapState(['token']),

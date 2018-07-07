@@ -8,11 +8,11 @@
       <v-layout row wrap justify-center align-center class="mt-3 mb-3">
         <v-flex xs12 md4>
           <v-icon large>date_range</v-icon>
-          {{ event.startDateTime }}
+          {{ event.startDateTime | showDateOnly }}
         </v-flex>
         <v-flex xs12 md4>
           <v-icon large>access_time</v-icon>
-          {{ event.startDateTime }}
+          {{ event.startDateTime | showTimeOnly }}
         </v-flex>
         <v-flex xs12 md4>
           <v-icon large>add_alarm</v-icon>
@@ -105,6 +105,7 @@
 
 <script>
 import { mapActions } from 'vuex';
+import dayjs from 'dayjs';
 
 export default {
   asyncData({ $axios, params }) {
@@ -125,7 +126,13 @@ export default {
       confirmDialog: false,
     }
   },
-  created() {
+  filters: {
+    showDateOnly(dateTime) {
+      return dayjs(dateTime).format('DD-MM-YYYY')
+    },
+    showTimeOnly(dateTime) {
+      return dayjs(dateTime).format('HH:mm')
+    }
   },
   methods: {
     ...mapActions(['notify']),
