@@ -28,7 +28,8 @@ export default {
         filter: {
           where: {
             confirmed: true,
-          }
+          },
+          include: ['organization']
         }
       }
 

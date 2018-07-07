@@ -32,7 +32,7 @@ export default {
       required: true,
     },
     organization: {
-      type: String,
+      type: Object,
       required: true,
     },
     description: {
