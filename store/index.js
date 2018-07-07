@@ -5,7 +5,6 @@ const CreateStore = () => {
   return new Vuex.Store({
     state: {
       token: null,
-      loadedEvents: [],
       notification: {
         color: 'error',
         active: false,
@@ -13,9 +12,6 @@ const CreateStore = () => {
       }
     },
     mutations: {
-      SET_EVENTS(state, events) {
-        state.loadedEvents = events;
-      },
       SET_NOTIFICATION(state, payload) {
         state.notification.active = !state.notification.active
         state.notification.message = payload.message
@@ -92,9 +88,6 @@ const CreateStore = () => {
     getters: {
       isLogedIn(state) {
         return state.token !== null ? true : false;
-      },
-      loadedEvents(state) {
-        return state.loadedEvents;
       },
     }
   })
