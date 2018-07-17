@@ -1,7 +1,7 @@
-export default function({ route, redirect, store }) {
+export default function({ route, $auth, redirect, store }) {
   const adminPathRegex = /admin/g
   if (adminPathRegex.test(route.path)) {
-    if (!store.getters.isLogedIn) {
+    if (!store.state.auth.loggedIn) {
       redirect('/login')
     }
   }

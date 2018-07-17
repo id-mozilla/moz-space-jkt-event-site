@@ -39,7 +39,7 @@ module.exports = {
   plugins: [
     '@/plugins/vuetify',
     '@/plugins/vee-validate',
-    { src: '@/plugins/vue-typer', ssr: false}
+    { src: '@/plugins/vue-typer', ssr: false},
   ],
 
   /*
@@ -49,12 +49,34 @@ module.exports = {
     // Doc: https://github.com/nuxt-community/axios-module#usage
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
+    '@nuxtjs/auth',
   ],
 
   router: {
-    middleware: ['check-auth', 'redirect-to-dashboard', 'is-admin']
+    middleware: ['auth', 'is-admin']
   },
 
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/users/custom-login', method: 'post', propertyName: 'token' },
+          logout:false, 
+          user: { url: '/users/me', method: 'post', propertyName: 'user'},
+        },
+        tokenRequired: true,
+        tokenType: '',
+      }
+    },
+    redirect: {
+      login: '/login',
+      logout: '/',
+      callback: '/login',
+      user: '/admin',
+      home: '/admin',
+    },
+    resetOnError: true,
+  },
 
   /*
   ** Axios module configuration

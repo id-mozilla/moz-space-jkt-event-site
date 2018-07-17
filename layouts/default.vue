@@ -20,7 +20,7 @@
             <v-list-tile-title v-text="item.title"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-if="!isLogedIn" 
+        <v-list-tile v-if="!isLoggedIn" 
                      router 
                      :to="'/login'" 
                      exact>
@@ -33,7 +33,7 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-if="isLogedIn" @click="goToDashboard" exact>
+        <v-list-tile v-if="isLoggedIn" @click="goToDashboard" exact>
           <v-list-tile-action>
             <v-icon>exit_to_app</v-icon>
           </v-list-tile-action>
@@ -43,7 +43,7 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-if="isLogedIn" @click="handleLogout" exact>
+        <v-list-tile v-if="isLoggedIn" @click="handleLogout" exact>
           <v-list-tile-action>
             <v-icon>exit_to_app</v-icon>
           </v-list-tile-action>
@@ -98,7 +98,6 @@ import { mapState, mapActions, mapGetters } from 'vuex'
     },
     computed: {
       ...mapState(['notification']),
-      ...mapGetters(['isLogedIn']),
       snackbarMessage: {
         get() {
           return this.notification.active
@@ -106,13 +105,19 @@ import { mapState, mapActions, mapGetters } from 'vuex'
         set(val) {
           this.notificationToggle()
         }
-      }
+      },
+      isLoggedIn() {
+        return this.$auth.loggedIn;
+      },
+      isAdmin() {
+        return this.$auth.hasScope('admin');
+      },
     },
     methods: {
-      ...mapActions(['logout']),
       handleLogout() {
-        this.logout();
-        this.goToHomepage();
+        this.$auth.logout().then(res => {
+          this.goToHomepage();
+        })
       },
       notificationToggle() {
         this.$store.dispatch('notify', { type: 'error', message: ''})

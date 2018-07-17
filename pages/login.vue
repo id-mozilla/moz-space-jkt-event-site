@@ -53,19 +53,14 @@ export default {
       let self = this;
       this.$validator.validateAll().then(isFormValid => {
         if (isFormValid) {
-          self.$store
-            .dispatch('login', {
+          this.$auth.loginWith('local', {
+            data: {
               email: this.email,
               password: this.password,
-            })
-            .then((isLoginSuccess) => {
-              if (isLoginSuccess) {
-                return this.$router.push('/admin');
-              }
-            })
-            .catch(err => {
-              console.log('error when trying to login : ', err);
-            });
+            }
+          }).then(res => {
+            return this.$router.push('/admin');
+          })
         }
       });
     },
