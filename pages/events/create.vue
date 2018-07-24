@@ -95,7 +95,6 @@ export default {
   },
   methods: {
     handleAfterEventCreated () {
-      console.log('move to thanks please')
       this.$router.push({
         name: 'events-thanks',
         query: {
