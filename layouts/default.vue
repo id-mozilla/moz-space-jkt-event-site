@@ -35,7 +35,7 @@
         </v-list-tile>
         <v-list-tile v-if="isLoggedIn" @click="goToDashboard" exact>
           <v-list-tile-action>
-            <v-icon>exit_to_app</v-icon>
+            <v-icon>dashboard</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>
@@ -85,10 +85,10 @@ import { mapState, mapActions, mapGetters } from 'vuex'
       return {
         drawer: false,
         items: [
-          { icon: 'apps', title: 'Beranda', to: '/' },
-          { icon: 'bubble_chart', title: 'Buat Acara', to: '/events/create' },
-          { icon: 'bubble_chart', title: 'Events', to: '/events' },
-          { icon: 'bubble_chart', title: 'Kalender', to: '/inspire' },
+          { icon: 'home', title: 'Beranda', to: '/' },
+          { icon: 'add', title: 'Buat Acara', to: '/events/create' },
+          { icon: 'view_agenda', title: 'Events', to: '/events' },
+          { icon: 'calendar_today', title: 'Kalender', to: '/calendar' },
         ],
         miniVariant: false,
         right: true,
