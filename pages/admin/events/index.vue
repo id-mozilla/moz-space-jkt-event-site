@@ -2,7 +2,19 @@
   <v-layout row justify-center align-center>
     <v-flex xs12 sm8 md8>
 
-      <h3 class="headline text-xs-center">Seluruh Acara</h3>
+      <h3 class="headline text-xs-center">Laporan Acara Per Bulan</h3>
+      
+      <h4>Silahkan pilih bulan dan tahun</h4>
+       <v-select
+          :items="months"
+          v-model="selectedMonth"
+          label="bulan"
+        ></v-select>
+       <v-select
+          :items="years"
+          v-model="selectedYear"
+          label="tahun"
+        ></v-select>
 
       <v-data-table
         :headers="headers"
@@ -26,6 +38,8 @@
   </v-layout>
 </template>
 <script>
+import dayjs from 'dayjs';
+
 export default {
   data() {
     return {
@@ -38,14 +52,27 @@ export default {
         { text: 'Developer', value: 'developer' },
         { text: 'Aksi', value: 'action' },
       ],
+      selectedMonth: null,
+      months: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+      selectedYear: null,
+      years: [2017, 2018, 2019, 2020, 2021],
     }
   },
   mounted() {
-    this.fetchEvents()
+    let dateObj = dayjs();
+    this.selectedYear = dateObj.year();
+    this.selectedMonth = this.months[dateObj.month()];
+
+    this.fetchEvents(dateObj.month(), dateObj.year());
   },
   methods: {
-    fetchEvents() {
-      this.$axios.$get('/Events?filter[include]=participants').then(events => {
+    fetchEvents(month, year) {
+      const date = dayjs(new Date(year, month))
+
+      const from = date.startOf('month').toJSON()
+      const to = date.endOf('month').toJSON();
+
+      this.$axios.$get(`/Events?filter[include]=participants&filter[where][and][0][createdAt][gt]=${from}&filter[where][and][1][createdAt][lt]=${to}`).then(events => {
         if (events) {
           this.events = events;
         }
@@ -69,6 +96,14 @@ export default {
         }
       })
     }
+  },
+  watch: {
+    selectedMonth(newVal) {
+      this.fetchEvents(this.months.indexOf(newVal), this.selectedYear);
+    },
+    selectedYear(newVal) {
+      this.fetchEvents(this.months.indexOf(newVal), this.selectedYear);
+    },
   },
   filters: {
     participans(evn, type) {
