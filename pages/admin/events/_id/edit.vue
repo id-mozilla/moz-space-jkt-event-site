@@ -45,6 +45,27 @@
           data-vv-name="description"
           multi-line
         ></v-text-field>
+        <h4>Centang checklist berikut sesuai acara mu :</h4>
+        <span >tidak perlu di centang jika tidak sesuai</span>
+        <v-checkbox
+          class="mt-2"
+          v-model="isUsingTable"
+          label="Acara ini memerlukan meja"
+          color="orange"
+          hide-details
+        ></v-checkbox>
+        <v-checkbox
+          v-model="isPaid"
+          label="Ini adalah acara berbayar"
+          color="orange"
+          hide-details
+        ></v-checkbox>
+        <v-checkbox
+          v-model="isProvidingFood"
+          label="Menyediakan makanan untuk peserta"
+          color="orange"
+          hide-details
+        ></v-checkbox>
         <v-text-field
           class="mt-3"
           label="Estimasi jumlah peserta"
@@ -54,6 +75,15 @@
           type="number"
           data-vv-name="numberOfAttendees"
         ></v-text-field>
+        <v-select
+          v-bind:items="[1, 2, 3, 4, 5, 6, 7, 8]"
+          v-model="duration"
+          label="Durasi acara dalam hitungan jam"
+          :error-messages="errors.collect('duration')"
+          v-validate="'required'"
+          data-vv-name="duration"
+          required
+        ></v-select>
         <v-btn @click="submit" color="primary">Edit</v-btn>
       </form>
     </v-flex>
@@ -67,6 +97,9 @@ export default {
         resolve({ title: res.title,
           description: res.description,
           numberOfAttendees: res.numberOfAttendees,
+          isPaid: res.isPaid,
+          isProvidingFood: res.isProvidingFood,
+          isUsingTable: res.isUsingTable,
         })
       }).catch(err => {
         reject({
@@ -85,6 +118,10 @@ export default {
       roomType: {},
       description: '',
       numberOfAttendees: 0,
+      isPaid: false,
+      isProvidingFood: false,
+      isUsingTable: false,
+      duration: 0,
     }
   },
   created() {
@@ -101,6 +138,10 @@ export default {
             description: this.description,
             eventType: this.eventType.id,
             numberOfAttendees: this.numberOfAttendees,
+            isPaid: this.isPaid,
+            isProvidingFood: this.isProvidingFood,
+            isUsingTable: this.isUsingTable,
+            duration: this.duration,
           }).then(res => {
             this.$router.push({ name: 'admin-events-id', params: {
               id: eventId,
