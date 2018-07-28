@@ -22,6 +22,7 @@ import EventList from '@/components/Events/EventList';
 import qs from 'qs';
 
 export default {
+  auth: false,
   asyncData({ $axios }) {
     return new Promise((resolve, reject) => {
       const requestParams = {

@@ -10,7 +10,8 @@
 
 <script>
 export default {
-  name: 'GreetingAfterCreateEvent'
+  name: 'GreetingAfterCreateEvent',
+  auth: false,
 }
 </script>
 

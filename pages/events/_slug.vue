@@ -10,6 +10,7 @@
 import EventDetail from '@/components/Events/EventDetail';
 
 export default {
+  auth: false,
   asyncData(context) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {

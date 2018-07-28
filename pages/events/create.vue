@@ -77,6 +77,7 @@ import ExistingOrganizationForm from '@/components/Events/Create/ExistingOrganiz
 import NewEventForm from '@/components/Events/Create/NewEventForm'
 
 export default {
+  auth: false,
   $_veeValidate: {
     validator: 'new',
   },

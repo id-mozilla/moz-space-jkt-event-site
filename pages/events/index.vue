@@ -11,6 +11,7 @@
 import EventList from '~/components/Events/EventList';
 
 export default {
+  auth: false,
   components: {
     EventList,
   },

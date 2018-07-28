@@ -53,7 +53,7 @@ module.exports = {
   ],
 
   router: {
-    middleware: ['auth', 'is-admin']
+    middleware: ['auth']
   },
 
   auth: {
