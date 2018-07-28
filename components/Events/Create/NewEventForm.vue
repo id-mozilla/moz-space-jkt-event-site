@@ -211,6 +211,7 @@ export default {
           this.$axios.$post('/Events', {
             organizationId: this.organization.id,
             eventTypeId: this.eventType.id,
+            roomTypeId: this.roomType.id,
             title: this.title,
             description: this.description,
             numberOfAttendees: this.numberOfAttendees,

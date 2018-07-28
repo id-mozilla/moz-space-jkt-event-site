@@ -100,6 +100,9 @@ export default {
           isPaid: res.isPaid,
           isProvidingFood: res.isProvidingFood,
           isUsingTable: res.isUsingTable,
+          eventType: res.eventType || {},
+          roomType: res.roomType || {},
+          duration: res.duration,
         })
       }).catch(err => {
         reject({
@@ -138,6 +141,8 @@ export default {
             description: this.description,
             eventType: this.eventType.id,
             numberOfAttendees: this.numberOfAttendees,
+            eventTypeId: this.eventType.id,
+            roomTypeId: this.roomType.id,
             isPaid: this.isPaid,
             isProvidingFood: this.isProvidingFood,
             isUsingTable: this.isUsingTable,
