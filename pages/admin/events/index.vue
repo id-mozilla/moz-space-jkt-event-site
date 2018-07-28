@@ -29,8 +29,7 @@
           <td class="text-xs-right">{{ props.item | participans('old') }}</td>
           <td class="text-xs-right">{{ props.item.participants | developerCount }}</td>
           <td class="text-xs-right">
-            <v-btn @click="goToAbsen(props.item.id)">Absen</v-btn>
-            <v-btn @click="goToWelcomeEvent(props.item.id)">Welcome</v-btn>
+            <v-btn @click="goToDetail(props.item.id)">Detail</v-btn>
           </td>
         </template>
       </v-data-table>
@@ -80,9 +79,9 @@ export default {
         console.log('error when : ', err)
       })
     },
-    goToAbsen(id) {
+    goToDetail(id) {
       this.$router.push({
-        name: 'admin-events-id-list-of-attendees',
+        name: 'admin-events-id',
         params: {
           id,
         }
