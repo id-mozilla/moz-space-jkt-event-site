@@ -97,7 +97,8 @@ export default {
             },
             confirmed: this.confirmed,
           },
-          include: ['eventType']
+          include: ['eventType'],
+          order: 'startDateTime DESC'
         }
       }
 

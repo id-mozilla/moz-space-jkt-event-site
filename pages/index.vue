@@ -30,8 +30,9 @@ export default {
           where: {
             confirmed: true,
           },
-          include: ['organization']
-        }
+          include: ['organization'],
+          order: 'startDateTime DESC',
+        },
       }
 
       $axios.$get(`/Events?${qs.stringify(requestParams)}`).then(res => resolve({events: res})).catch(err => {
