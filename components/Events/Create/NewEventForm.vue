@@ -191,7 +191,7 @@ export default {
       const [hour, minute] = this.startTime.split(':')
       const [year, month, day] = this.date.split('-')
 
-      return dayjs(new Date(year, month, day, hour, minute)).toISOString()
+      return dayjs(new Date(year, month - 1, day, hour, minute)).toISOString()
     },
     endDateTime() {
       const startDateTime = this.startDateTime
