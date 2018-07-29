@@ -91,7 +91,6 @@ import { mapState, mapActions, mapGetters } from 'vuex'
           { icon: 'home', title: 'Beranda', to: '/' },
           { icon: 'add', title: 'Buat Acara', to: '/events/create' },
           { icon: 'view_agenda', title: 'Events', to: '/events' },
-          { icon: 'calendar_today', title: 'Kalender', to: '/calendar' },
         ],
         loggedInMenu: [
           { icon: 'dashboard', title: 'Dashboard', to: '/admin' },
