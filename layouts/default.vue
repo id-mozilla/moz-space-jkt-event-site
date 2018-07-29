@@ -10,7 +10,7 @@
           router
           :to="item.to"
           :key="i"
-          v-for="(item, i) in items"
+          v-for="(item, i) in menus"
           exact
         >
           <v-list-tile-action>
@@ -33,14 +33,17 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-if="isLoggedIn" @click="goToDashboard" exact>
+        <v-list-tile v-if="isLoggedIn"
+          router
+          v-for="(menu, index) in loggedInMenu" 
+          :key="index" 
+          :to="menu.to"
+          exact>
           <v-list-tile-action>
-            <v-icon>dashboard</v-icon>
+            <v-icon v-html="menu.icon"></v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>
-              Dashboard
-            </v-list-tile-title>
+            <v-list-tile-title v-html="menu.title"> </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
         <v-list-tile v-if="isLoggedIn" @click="handleLogout" exact>
@@ -84,11 +87,15 @@ import { mapState, mapActions, mapGetters } from 'vuex'
     data() {
       return {
         drawer: false,
-        items: [
+        menus: [
           { icon: 'home', title: 'Beranda', to: '/' },
           { icon: 'add', title: 'Buat Acara', to: '/events/create' },
           { icon: 'view_agenda', title: 'Events', to: '/events' },
           { icon: 'calendar_today', title: 'Kalender', to: '/calendar' },
+        ],
+        loggedInMenu: [
+          { icon: 'dashboard', title: 'Dashboard', to: '/admin' },
+          { icon: 'assessment', title: 'Event Report', to: '/admin/events/reports'}
         ],
         miniVariant: false,
         right: true,
@@ -127,11 +134,6 @@ import { mapState, mapActions, mapGetters } from 'vuex'
           name: 'index',
         });
       },
-      goToDashboard() {
-        this.$router.push({
-          name: 'admin'
-        })
-      }
     }
   }
 </script>
