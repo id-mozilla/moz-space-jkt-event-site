@@ -80,18 +80,6 @@
       required
     ></v-select>
     <v-select
-      v-bind:items="eventTypeOptions"
-      v-model="eventType"
-      label="Jenis acara"
-      v-validate="'required'"
-      :error-messages="errors.collect('eventType')"
-      data-vv-name="eventType"
-      item-text="name"
-      item-value="id"
-      return-object
-      required
-    ></v-select>
-    <v-select
       v-bind:items="roomTypeOptions"
       v-model="roomType"
       label="Tipe Ruangan"
@@ -104,6 +92,31 @@
       :hint="`${roomType.name} untuk sekitar ${roomType.capacity} orang`"
       required
     ></v-select>
+    <hr class="ma-4"/>
+    <h3>Jenis Acara dan Peserta</h3>
+    <v-select
+      v-bind:items="eventTypeOptions"
+      v-model="eventType"
+      label="Jenis acara"
+      v-validate="'required'"
+      :error-messages="errors.collect('eventType')"
+      data-vv-name="eventType"
+      item-text="name"
+      item-value="id"
+      return-object
+      required
+    ></v-select>
+    <v-text-field
+      class="mt-3"
+      label="Estimasi jumlah peserta"
+      v-model="numberOfAttendees"
+      :error-messages="errors.collect('numberOfAttendees')"
+      v-validate="'numeric|required|min_value:1'"
+      type="number"
+      data-vv-name="numberOfAttendees"
+    ></v-text-field>
+    <hr class="ma-4"/>
+    <h3>Detil Acara</h3>
     <h4>Centang checklist berikut sesuai acara mu :</h4>
     <span >tidak perlu di centang jika tidak sesuai</span>
     <v-checkbox
@@ -140,15 +153,6 @@
       v-validate="''"
       data-vv-name="registrationLink"
       required
-    ></v-text-field>
-    <v-text-field
-      class="mt-3"
-      label="Estimasi jumlah peserta"
-      v-model="numberOfAttendees"
-      :error-messages="errors.collect('numberOfAttendees')"
-      v-validate="'numeric|required|min_value:1'"
-      type="number"
-      data-vv-name="numberOfAttendees"
     ></v-text-field>
     <v-checkbox
       v-model="agreeTermAndCondition"
