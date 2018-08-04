@@ -8,28 +8,39 @@
 
 <script>
 import EventDetail from '@/components/Events/EventDetail';
+import qs from 'qs';
 
 export default {
   auth: false,
-  asyncData(context) {
+  asyncData({ $axios, params }) {
     return new Promise((resolve, reject) => {
-      setTimeout(() => {
+      console.log('params : ', params)
+      const filters = {
+        filter: {
+          where: {
+            slug: params.slug
+          },
+          limit: 1,
+          include: ['eventType', 'organization']
+        }
+      }
+
+      $axios.$get(`/Events?${qs.stringify(filters)}`).then(res => {
+        console.log('res : ', res)
         resolve({
-          event: {
-            id: 'as323131af',
-            title: "#MozBelajar CSS Grid",
-            slug: "moz-belajar-css-grid",
-            organization: "Mozilla Indonesia",
-            description: "Anggap aja ini description dulu ya",
-          }
+          event: res[0],
         })
-      }, 1500)
+      })
     }).then(data => {
       return data;
     }).catch(err => {
       context.error(err);
     })
-    
+  },
+  data() {
+    return {
+      event: {}
+    }
   },
   components: {
     EventDetail,
