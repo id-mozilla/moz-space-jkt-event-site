@@ -135,6 +135,7 @@
       hide-details
     ></v-checkbox>
     <v-text-field
+      v-if="!isPrivate"
       v-model="registrationLink"
       label="Link Pendaftaran"
       placeholder="contoh dari EventBrite, Google form, dll"
