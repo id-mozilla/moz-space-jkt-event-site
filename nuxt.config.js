@@ -40,6 +40,7 @@ module.exports = {
     '@/plugins/vuetify',
     '@/plugins/vee-validate',
     { src: '@/plugins/vue-typer', ssr: false},
+    { src: '@/plugins/vue2-editor', ssr: false },
   ],
 
   /*

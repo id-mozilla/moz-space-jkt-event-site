@@ -25,6 +25,7 @@
     "socket.io-client": "^2.1.0",
     "vee-validate": "^2.0.9",
     "vue-typer": "^1.2.0",
+    "vue2-editor": "^2.6.1",
     "vuetify": "^0.17.3"
   },
   "devDependencies": {
