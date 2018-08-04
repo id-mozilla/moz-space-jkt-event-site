@@ -128,6 +128,12 @@
       color="orange"
       hide-details
     ></v-checkbox>
+    <v-checkbox
+      v-model="isPrivate"
+      label="Apakah acara ini TIDAK terbuka untuk umum (private) ?"
+      color="orange"
+      hide-details
+    ></v-checkbox>
     <v-text-field
       class="mt-3"
       label="Estimasi jumlah peserta"
@@ -179,6 +185,7 @@ export default {
       agreeTermAndCondition: null,
       isPaid: false,
       isProvidingFood: false,
+      isPrivate: false,
       isUsingTable: false,
     }
   },
@@ -218,6 +225,7 @@ export default {
             isPaid: this.isPaid,
             isUsingTable: this.isUsingTable,
             isProvidingFood: this.isProvidingFood,
+            isPrivate: this.isPrivate,
             numberOfAttendees: this.numberOfAttendees,
             startDateTime: this.startDateTime, 
             duration: this.duration,

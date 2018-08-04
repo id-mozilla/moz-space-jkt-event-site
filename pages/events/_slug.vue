@@ -14,7 +14,6 @@ export default {
   auth: false,
   asyncData({ $axios, params }) {
     return new Promise((resolve, reject) => {
-      console.log('params : ', params)
       const filters = {
         filter: {
           where: {
@@ -26,7 +25,6 @@ export default {
       }
 
       $axios.$get(`/Events?${qs.stringify(filters)}`).then(res => {
-        console.log('res : ', res)
         resolve({
           event: res[0],
         })
