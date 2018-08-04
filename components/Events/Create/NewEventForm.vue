@@ -135,6 +135,15 @@
       hide-details
     ></v-checkbox>
     <v-text-field
+      v-model="registrationLink"
+      label="Link Pendaftaran"
+      placeholder="contoh dari EventBrite, Google form, dll"
+      :error-messages="errors.collect('registrationLink')"
+      v-validate=""
+      data-vv-name="registrationLink"
+      required
+    ></v-text-field>
+    <v-text-field
       class="mt-3"
       label="Estimasi jumlah peserta"
       v-model="numberOfAttendees"
@@ -186,6 +195,7 @@ export default {
       isPaid: false,
       isProvidingFood: false,
       isPrivate: false,
+      registrationLink: '',
       isUsingTable: false,
     }
   },
@@ -226,6 +236,7 @@ export default {
             isUsingTable: this.isUsingTable,
             isProvidingFood: this.isProvidingFood,
             isPrivate: this.isPrivate,
+            registrationLink: this.registrationLink,
             numberOfAttendees: this.numberOfAttendees,
             startDateTime: this.startDateTime, 
             duration: this.duration,
