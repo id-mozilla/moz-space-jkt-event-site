@@ -9,6 +9,12 @@
       data-vv-name="title"
       required
     ></v-text-field>
+    <h4 class="mb-2">Deskirpsi Acara</h4>
+    <vue-editor :editorOptions="vueEditorOptions" 
+      :editor-toolbar="customToolbar"
+      v-model="description"></vue-editor>
+    <hr class="ma-4"/>
+    <h3>Waktu dan Tempat</h3>
     <v-menu
       ref="menu"
       lazy
@@ -98,15 +104,6 @@
       :hint="`${roomType.name} untuk sekitar ${roomType.capacity} orang`"
       required
     ></v-select>
-    <v-text-field
-      name="input-7-1"
-      label="Deskripis acara"
-      v-model="description"
-      :error-messages="errors.collect('description')"
-      v-validate="'required'"
-      data-vv-name="description"
-      multi-line
-    ></v-text-field>
     <h4>Centang checklist berikut sesuai acara mu :</h4>
     <span >tidak perlu di centang jika tidak sesuai</span>
     <v-checkbox
@@ -140,7 +137,7 @@
       label="Link Pendaftaran"
       placeholder="contoh dari EventBrite, Google form, dll"
       :error-messages="errors.collect('registrationLink')"
-      v-validate=""
+      v-validate="''"
       data-vv-name="registrationLink"
       required
     ></v-text-field>
@@ -198,6 +195,14 @@ export default {
       isPrivate: false,
       registrationLink: '',
       isUsingTable: false,
+      vueEditorOptions: {
+        placeholder: 'Tulis deskripsi acara ini',
+      },
+      customToolbar: [
+        ['bold', 'italic', 'underline'],
+        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        ['code-block']
+      ]
     }
   },
   created() {
