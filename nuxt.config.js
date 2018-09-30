@@ -51,6 +51,7 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/dotenv',
     '@nuxtjs/auth',
+    '@nuxtjs/toast',
   ],
 
   router: {
@@ -85,6 +86,11 @@ module.exports = {
   axios: {
     baseURL: process.env.BASE_URL || 'http://wrong.url'
     // See https://github.com/nuxt-community/axios-module#options
+  },
+
+  toast: {
+    position: 'top-center',
+    dutation: 5000
   },
 
   /*
