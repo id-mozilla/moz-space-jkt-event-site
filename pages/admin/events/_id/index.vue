@@ -88,6 +88,12 @@
             <v-btn @click="$router.push({ name: 'admin-events-id-welcome', params: { id: event.id }})">Ucapan Selamat Datang</v-btn>
           </v-flex>
         </v-layout>
+        <v-layout row wrap justify-center align-center class="my-2">
+          <v-flex xs12>
+            <participant-table title="Daftar Peserta"
+              :event-id="event.id"/>
+          </v-flex>
+        </v-layout>
       </div>
     </v-flex>
     <v-dialog v-model="confirmDialog" persistent max-width="290">
@@ -107,11 +113,15 @@
 <script>
 import { mapActions } from 'vuex';
 import dayjs from 'dayjs';
+import ParticipantTable from '@/components/Events/ParticipantTable';
 
 export default {
+  components: {
+    ParticipantTable
+  },
   asyncData({ $axios, params }) {
     return new Promise((resolve, reject) => {
-      $axios.$get(`/Events/${params.id}?filter[include]=organization&filter[include]=roomType&filter[include]=eventType`).then(res => {
+      $axios.$get(`/Events/${params.id}?filter[include]=organization&filter[include]=roomType&filter[include]=eventType&filter[include]=participants`).then(res => {
         resolve({ event: res })
       }).catch(err => {
         reject({
