@@ -30,6 +30,14 @@
             <v-btn color="primary" disabled="true">Lihat</v-btn>
           </td>
         </template>
+        <template slot="footer" v-if="report">
+          <td colspan="100%">
+            <span class="my-2"> Jumlah peserta </span>
+              <strong>{{ this.report.total }}</strong>,
+              terdiri dari : <strong>{{ this.report.developer }} Developer</strong>
+              dan ada <strong>{{ this.report.new }} peserta baru </strong>
+          </td>
+        </template>
       </v-data-table>
       <div class="text-xs-center pt-2">
         <v-pagination v-model="pagination.page" 
@@ -70,11 +78,13 @@ export default {
         { text: 'Developer', value: 'isDeveloper' },
         { text: 'Aksi', value: '' },
       ],
+      report: null,
     };
   },
   created() {
     this.fetchItems(1);
     this.fetchTotalItems();
+    this.fetchReport();
   },
   methods: {
     ...mapActions(['notify']),
@@ -114,6 +124,11 @@ export default {
         this.totalItems = response.count;
       })
     },
+    fetchReport() {
+      this.$axios.$get(`/Events/report?eventId=${this.eventId}`).then(report => {
+        this.report = report;
+      })
+    }
   },
   computed: {
     pages() {
