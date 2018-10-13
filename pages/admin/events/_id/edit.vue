@@ -165,6 +165,7 @@ export default {
             isProvidingFood: this.isProvidingFood,
             isUsingTable: this.isUsingTable,
             isPrivate: this.isPrivate,
+            slug: this.slug,
             duration: this.duration,
           }).then(res => {
             this.$router.push({ name: 'admin-events-id', params: {
