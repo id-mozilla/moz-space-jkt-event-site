@@ -82,7 +82,7 @@
         <v-layout row wrap justify-center align-center class="my-2">
           <v-flex xs6 sm6 md6>
             <v-btn color="primary" @click="$router.push({ name: 'admin-events-id-list-of-attendees', params: { id: event.id }})">Absensi</v-btn>
-            <v-btn @click="$router.push({ name: 'admin-events-id-edit'})">Edit</v-btn>
+            <v-btn @click="$router.push({ name: 'admin-events-id-edit', params: { id: event.id }})">Edit</v-btn>
           </v-flex>
           <v-flex xs6 sm6 md6>
             <v-btn @click="$router.push({ name: 'admin-events-id-welcome', params: { id: event.id }})">Ucapan Selamat Datang</v-btn>
