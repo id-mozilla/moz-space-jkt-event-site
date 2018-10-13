@@ -11,6 +11,14 @@
           data-vv-name="title"
           required
         ></v-text-field>
+        <v-text-field
+          v-model="slug"
+          label="Slug"
+          :error-messages="errors.collect('slug')"
+          v-validate="'required'"
+          data-vv-name="slug"
+          required
+        ></v-text-field>
         <v-select
           v-bind:items="eventTypeOptions"
           v-model="eventType"
@@ -66,6 +74,12 @@
           color="orange"
           hide-details
         ></v-checkbox>
+        <v-checkbox
+          v-model="isPrivate"
+          label="Apakah acara ini TIDAK terbuka untuk umum (private) ?"
+          color="orange"
+          hide-details
+        ></v-checkbox>
         <v-text-field
           class="mt-3"
           label="Estimasi jumlah peserta"
@@ -103,6 +117,8 @@ export default {
           eventType: res.eventType || {},
           roomType: res.roomType || {},
           duration: res.duration,
+          isPrivate: res.isPrivate,
+          slug: res.slug,
         })
       }).catch(err => {
         reject({
@@ -122,9 +138,11 @@ export default {
       description: '',
       numberOfAttendees: 0,
       isPaid: false,
+      isPrivate: false,
       isProvidingFood: false,
       isUsingTable: false,
       duration: 0,
+      slug: '',
     }
   },
   created() {
@@ -146,6 +164,7 @@ export default {
             isPaid: this.isPaid,
             isProvidingFood: this.isProvidingFood,
             isUsingTable: this.isUsingTable,
+            isPrivate: this.isPrivate,
             duration: this.duration,
           }).then(res => {
             this.$router.push({ name: 'admin-events-id', params: {
