@@ -80,6 +80,14 @@
           color="orange"
           hide-details
         ></v-checkbox>
+        <hr>
+        <v-checkbox
+          v-model="isDeveloperEvent"
+          label="Apakah ini acara developer ?"
+          color="orange"
+          hide-details
+        ></v-checkbox>
+        <hr>
         <v-text-field
           class="mt-3"
           label="Estimasi jumlah peserta"
@@ -119,6 +127,7 @@ export default {
           duration: res.duration,
           isPrivate: res.isPrivate,
           slug: res.slug,
+          isDeveloperEvent: res.isDeveloperEvent || false,
         })
       }).catch(err => {
         reject({
@@ -143,6 +152,7 @@ export default {
       isUsingTable: false,
       duration: 0,
       slug: '',
+      isDeveloperEvent: false,
     }
   },
   created() {
@@ -167,6 +177,7 @@ export default {
             isPrivate: this.isPrivate,
             slug: this.slug,
             duration: this.duration,
+            isDeveloperEvent: this.isDeveloperEvent,
           }).then(res => {
             this.$router.push({ name: 'admin-events-id', params: {
               id: eventId,
