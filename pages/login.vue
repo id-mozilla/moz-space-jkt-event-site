@@ -55,7 +55,7 @@ export default {
         if (isFormValid) {
           this.$auth.loginWith('local', {
             data: {
-              email: this.email,
+              email: this.email.toLowerCase(),
               password: this.password,
             }
           }).then(res => {
