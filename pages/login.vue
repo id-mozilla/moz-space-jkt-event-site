@@ -11,7 +11,7 @@
           v-model="email"
           label="Email"
           :error-messages="errors.collect('email')"
-          v-validate="'required'"
+          v-validate="'required|email'"
           data-vv-name="email"
           @keyup.enter="login"
           required
