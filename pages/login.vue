@@ -59,7 +59,12 @@ export default {
               password: this.password,
             }
           }).then(res => {
+            if (!res.success) {
+              this.$toast.error('Error while authenticating')
+            }
             return this.$router.push('/admin');
+          }).catch(() => {
+            this.$toast.error('Error while authenticating')
           })
         }
       });
