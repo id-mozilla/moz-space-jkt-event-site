@@ -90,7 +90,14 @@ module.exports = {
 
   toast: {
     position: 'top-center',
-    dutation: 5000
+    duration: 5000,
+    action : {
+      text : 'Tutup',
+      onClick : (e, toastObject) => {
+          toastObject.goAway(0);
+      }
+  },
+
   },
 
   /*
