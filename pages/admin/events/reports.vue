@@ -24,6 +24,7 @@
       >
         <template slot="items" slot-scope="props">
           <td class="text-xs-right">{{ props.item.title }}</td>
+          <td class="text-xs-right">{{ props.item | eventDate }}</td>
           <td class="text-xs-right">{{ props.item.participants.length }}</td>
           <td class="text-xs-right">{{ props.item | participans('new') }}</td>
           <td class="text-xs-right">{{ props.item | participans('old') }}</td>
@@ -45,6 +46,7 @@ export default {
       events: [],
       headers: [
         { text: 'Acara', value: 'title' },
+        { text: 'Tanggal', value: 'date' },
         { text: 'Jumlah partisipan', value: 'partcipants' },
         { text: 'Partisipan Baru', value: 'newPartcipants' },
         { text: 'Partisipan Lama', value: 'existingPartcipants' },
@@ -128,7 +130,10 @@ export default {
     },
     developerCount(partcipants) {
       return partcipants.filter(participant => participant.isDeveloper).length;
-    } 
+    },
+    eventDate(event)  {
+      return dayjs(event.startDateTime).format('DD/MM/YYYY')
+    }
   }
 }
 </script>
