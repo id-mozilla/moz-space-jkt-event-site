@@ -50,6 +50,7 @@ export default {
 
   methods: {
     login() {
+      this.$toast.clear()
       let self = this;
       this.$validator.validateAll().then(isFormValid => {
         if (isFormValid) {
@@ -58,12 +59,9 @@ export default {
               email: this.email.toLowerCase(),
               password: this.password,
             }
-          }).then(res => {
-            if (!res.success) {
-              this.$toast.error('Error while authenticating')
-            }
-            return this.$router.push('/admin');
-          }).catch(() => {
+          }).then(() => {
+            this.$toast.error('Error while authenticating')
+          }).catch((e) => {
             this.$toast.error('Error while authenticating')
           })
         }
