@@ -9,7 +9,7 @@
         <v-list-tile
           router
           :to="item.to"
-          :key="i"
+          :key="i.title"
           v-for="(item, i) in menus"
           exact
         >
@@ -33,19 +33,21 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile v-if="isLoggedIn"
-          router
-          v-for="(menu, index) in loggedInMenu" 
-          :key="index" 
-          :to="menu.to"
-          exact>
-          <v-list-tile-action>
-            <v-icon v-html="menu.icon"></v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title v-html="menu.title"> </v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+        <template v-if="isLoggedIn">
+          <v-list-tile 
+            router
+            v-for="(menu, index) in loggedInMenu" 
+            :key="index" 
+            :to="menu.to"
+            exact>
+            <v-list-tile-action>
+              <v-icon v-html="menu.icon"></v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title v-html="menu.title"> </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </template>
         <v-list-tile v-if="isLoggedIn" @click="handleLogout" exact>
           <v-list-tile-action>
             <v-icon>exit_to_app</v-icon>
