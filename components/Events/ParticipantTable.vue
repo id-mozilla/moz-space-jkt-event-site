@@ -26,8 +26,9 @@
           <td>{{ props.item.email }}</td>
           <td>{{ props.item.phone }}</td>
           <td> <v-icon v-if="props.item.isDeveloper">check</v-icon></td>
+          <td>{{ props.item | date }}</td>
           <td>
-            <v-btn color="primary" disabled="true">Lihat</v-btn>
+            <v-btn color="primary" :disabled="true">Lihat</v-btn>
           </td>
         </template>
         <template slot="footer" v-if="report">
@@ -52,6 +53,7 @@
 <script>
 import { mapActions } from 'vuex';
 import qs from 'qs'
+import dayjs from 'dayjs'
 
 export default {
   props: {
@@ -76,6 +78,7 @@ export default {
         { text: 'Email', value: 'email' },
         { text: 'Phone', value: 'phone' },
         { text: 'Developer', value: 'isDeveloper' },
+        { text: 'Tanggal', value: 'date' },
         { text: 'Aksi', value: '' },
       ],
       report: null,
@@ -112,7 +115,6 @@ export default {
         .$get(`/Events/${this.eventId}/participants?${qs.stringify(params)}`)
         .then(response => {
           this.loading = false;
-          console.log('res >>>>', response)
           this.items = response;
         })
         .catch(err => {
@@ -138,6 +140,11 @@ export default {
 
       return Math.ceil(this.totalItems / this.pagination.rowPerPage);
     },
+  },
+  filters: {
+    date(participant)  {
+      return dayjs(participant.createdAt).format('DD/MM/YYYY')
+    }
   },
   watch: {
     searchKeyword(keyword) {
