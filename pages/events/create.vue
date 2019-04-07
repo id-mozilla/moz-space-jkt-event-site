@@ -15,7 +15,7 @@
         <v-stepper-items>
           <v-progress-linear v-if="isLoading" :indeterminate="true"></v-progress-linear>
           <v-stepper-content step="1">
-            <term-condition></term-condition> 
+            <term-condition></term-condition>
             <div class="text-xs-right">
               <v-btn large color="secondary" @click.native="nextStep()">Selanjutnya</v-btn>
             </div>
@@ -30,12 +30,12 @@
           </v-stepper-content>
           <v-stepper-content step="3">
             <div class="text-xs-center">
-              <h2 class="heading ma-3">Apakah komunitasmu pernah mengadakan acara disini ?</h2>
+              <h2 class="heading ma-3">Apakah komunitasmu pernah mengadakan acara di sini ?</h2>
               <v-btn outline @click.native="chooseFirstTime(false)">Sudah Pernah</v-btn>
               <v-btn outline @click.native="chooseFirstTime(true)">Belum Pernah</v-btn>
             </div>
 
-            <new-organization-form v-if="isOrganizationOptionChoosed && isFirstTime" 
+            <new-organization-form v-if="isOrganizationOptionChoosed && isFirstTime"
               ref="newOrganizationForm"
               @organizationFormSubmitted="handleOrganizationFormAfterSubmit"
               @startLoading="isLoading = true"></new-organization-form>
@@ -159,4 +159,3 @@ export default {
   width: 35vw;
 }
 </style>
-

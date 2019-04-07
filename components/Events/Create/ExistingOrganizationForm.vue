@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-select
-      label="Masukan Komunitas Kamu"
+      label="Masukan Nama Komunitas Kamu"
       autocomplete
       :loading="loading"
       cache-items
@@ -13,8 +13,8 @@
       item-text="name"
       return-object
     ></v-select>
-    <organization-detail 
-      :organization="organization" 
+    <organization-detail
+      :organization="organization"
       v-if="isOrganizationSelected">
     </organization-detail>
     <div v-if="mayBeNewcomer && !isOrganizationSelected">
@@ -93,4 +93,3 @@ export default {
   }
 };
 </script>
-
