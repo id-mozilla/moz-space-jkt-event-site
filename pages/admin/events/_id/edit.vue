@@ -46,7 +46,7 @@
         ></v-select>
         <v-text-field
           name="input-7-1"
-          label="Deskripis acara"
+          label="Deskripsi acara"
           v-model="description"
           :error-messages="errors.collect('description')"
           v-validate="'required'"
