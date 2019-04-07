@@ -9,7 +9,7 @@
       data-vv-name="title"
       required
     ></v-text-field>
-    <h4 class="mb-2">Deskirpsi Acara</h4>
+    <h4 class="mb-2">Deskripsi Acara</h4>
     <vue-editor :editorOptions="vueEditorOptions" 
       :editor-toolbar="customToolbar"
       v-model="description"></vue-editor>
