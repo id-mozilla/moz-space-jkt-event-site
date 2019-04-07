@@ -17,14 +17,9 @@
       data-vv-name="pic"
       required
     ></v-text-field>
-    <v-text-field
-      v-model="description"
-      label="Deskripsi singkat tentang komunitas kamu"
-      :error-messages="errors.collect('description')"
-      v-validate="'required'"
-      data-vv-name="description"
-      required
-    ></v-text-field>
+    <vue-editor :editorOptions="vueEditorOptions" 
+      :editor-toolbar="customToolbar"
+      v-model="description"></vue-editor>
     <v-text-field
       v-model="email"
       label="E-mail"
@@ -88,6 +83,9 @@ export default {
       facebookLink: '',
       description: '',
       organization: '', // will be called from parent component
+      vueEditorOptions: {
+        placeholder: 'Deskripsi singkat tentang komunitas kamu',
+      },
     }
   },
   methods: {
