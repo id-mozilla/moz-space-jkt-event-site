@@ -18,7 +18,6 @@
       required
     ></v-text-field>
     <vue-editor :editorOptions="vueEditorOptions" 
-      :editor-toolbar="customToolbar"
       v-model="description"></vue-editor>
     <v-text-field
       v-model="email"
