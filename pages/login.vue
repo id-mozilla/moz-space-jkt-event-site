@@ -1,9 +1,9 @@
 <template>
   <v-layout align-center justify-center>
-    <v-flex xs12 
-            sm4 
-            md4 
-            text-xs-center 
+    <v-flex xs12
+            sm4
+            md4
+            text-xs-center
             mt-5>
       <h3>Masuk kedalam sistem MozSpaceJKT</h3>
       <form>
@@ -60,7 +60,7 @@ export default {
               password: this.password,
             }
           }).then(() => {
-            this.$toast.error('Error while authenticating')
+            this.$toast.success('Success authenticating')
           }).catch((e) => {
             this.$toast.error('Error while authenticating')
           })
