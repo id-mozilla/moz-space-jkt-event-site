@@ -1,7 +1,7 @@
 <template>
   <v-layout column justify-center align-center>
     <v-flex xs12 sm8 md8>
-      <h2 class="ma-3 text-xs-center">Selanggarakan acara mu di MozSpaceJKT</h2>
+      <h2 class="ma-3 text-xs-center">Selenggarakan acaramu di Mozilla Community Space Jakarta</h2>
       <v-stepper v-model="step">
         <v-stepper-header>
           <v-stepper-step step="1" :complete="step > 1">Membaca Ketentuan </v-stepper-step>
