@@ -92,11 +92,11 @@ import { mapState, mapActions, mapGetters } from 'vuex'
         menus: [
           { icon: 'home', title: 'Beranda', to: '/' },
           { icon: 'add', title: 'Buat Acara', to: '/events/create' },
-          { icon: 'view_agenda', title: 'Events', to: '/events' },
+          { icon: 'view_agenda', title: 'Acara', to: '/events' },
         ],
         loggedInMenu: [
-          { icon: 'dashboard', title: 'Dashboard', to: '/admin' },
-          { icon: 'assessment', title: 'Event Report', to: '/admin/events/reports'}
+          { icon: 'dashboard', title: 'Dasbor', to: '/admin' },
+          { icon: 'assessment', title: 'Laporan Acara', to: '/admin/events/reports'}
         ],
         miniVariant: false,
         right: true,
