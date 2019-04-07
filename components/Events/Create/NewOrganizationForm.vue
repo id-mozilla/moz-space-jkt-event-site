@@ -39,6 +39,7 @@
       :error-messages="errors.collect('phone')"
       v-validate="'required'"
       data-vv-name="phone"
+      type="number"
       required
     ></v-text-field>
     <v-text-field
@@ -81,7 +82,7 @@ export default {
       pic: '',
       name: '',
       email: '',
-      phone: '',
+      phone: 0,
       website: '',
       instagramLink: '',
       twitterLink: '',
