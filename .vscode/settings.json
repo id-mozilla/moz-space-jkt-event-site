@@ -1,0 +1,4 @@
+{
+  "eslint.autoFixOnSave": true,
+  "html.format.wrapLineLength": 100
+}

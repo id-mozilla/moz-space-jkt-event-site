@@ -10,9 +10,9 @@
         Untuk perlengkapan makan, kami menyediakan gelas plastik, sendok - garpu plastik, piring dan mangkok plastik sekali pakai yang dapat digunakan oleh peserta.</p>
     <h4>Ketentuan</h4>
     <ol>
-      <li class="mb-2">Kami memprioritaskan kegiatan komunitas Web Developer, terutama yang bersifat Open Source, atau yang sejalan dengan misi dan manifesto dari Mozilla. Selengkapnya <a href="https://www.mozilla.org/en-US/about/manifesto/" target="_blank"> https://www.mozilla.org/en-US/about/manifesto/</a></li>
-      <li class="mb-2">Kami membuka tempat kami sebagai basecamp atau markas, untuk kegiatan internal, meeting, talk & sharing, bagi komunitas-komunitas yang sejalan dengan visi misi dari Mozilla.</li>
-      <li class="mb-2">Kami tidak menerima permintaan penyelenggaraan kegiatan yang bersifat komersial, politik, atau SARA.</li>
+      <li class="mb-2">Kami memprioritaskan kegiatan komunitas Web Developer, terutama yang bersifat Open Source, atau yang sejalan dengan visi misi dari Mozilla.</li>
+      <li class="mb-2">Kami membuka tempat kami sebagai basecamp atau markas, untuk kegiatan internal, meeting, talk & sharing, bagi komunitas-komunitas yang sejalan dengan misi dan manifesto dari Mozilla. Selengkapnya <a href="https://www.mozilla.org/en-US/about/manifesto/" target="_blank"> https://www.mozilla.org/en-US/about/manifesto/</a></li>
+      <li class="mb-2">Kami tidak menerima permintaan penyelenggaraan kegiatan yang bersifat komersial, politik, atau SARA (Suku, Agama, Ras, Antar Golongan).</li>
       <li class="mb-2">MozSpaceJKT hanya buka sampai 21.00 WIB. Bila ada perubahan atau penambahan waktu, mohon segera dikonfirmasikan kepada kami :)</li>
       <li class="mb-2">Kami menyediakan berbagai macam minuman panas, dingin, dan dispenser, serta berbagai macam makanan ringan yang dapat dikonsumsi oleh peserta acara secara free flow dan gratis, karena merupakan bagian dari pelayanan MozSpaceJKT, namun kami tidak menyediakan makanan berat.</li>
       <li class="mb-2">Dimohon untuk ikut memperhatikan kebersihan ruangan dan membuang sampah pada tempatnya.</li>
