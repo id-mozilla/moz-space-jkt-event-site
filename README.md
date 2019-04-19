@@ -23,3 +23,13 @@ $ yarn run generate
 ```
 
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
+
+# Contributors
+-  [@dikyarga](https://github.com/dikyarga)
+- [@kelimuttu](https://github.com/kelimuttu)
+- [@adzshaf](https://github.com/adzshaf)
+- [@kfsl](https://github.com/kfsl)
+- [@ridhomain](https://github.com/ridhomain)
+- [@lidan86](https://github.com/lidan86)
+- [@hadyandev](https://github.com/hadyandev)
+- [@Dargoz](https://github.com/Dargoz)
