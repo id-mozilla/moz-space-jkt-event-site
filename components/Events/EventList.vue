@@ -1,13 +1,14 @@
 <template>
   <div>
-    <event-preview v-for="event in events" 
-      :key="event.id" 
+    <event-preview v-for="event in events"
+      :key="event.id"
       :id="event.id"
-      :slug="event.slug" 
-      :title="event.title" 
-      :organization="event.organization" 
-      :description="event.description" />
-  </div>  
+      :slug="event.slug"
+      :title="event.title"
+      :organization="event.organization"
+      :description="event.description"
+      :registrationLink="event.registrationLink"/>
+  </div>
 </template>
 
 <script>
@@ -21,7 +22,7 @@ export default {
   props: {
     events: {
       type: Array,
-      required: true,
+      required: false,
     }
   }
 }
