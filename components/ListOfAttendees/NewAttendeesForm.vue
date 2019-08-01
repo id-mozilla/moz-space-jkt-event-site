@@ -25,14 +25,6 @@
       data-vv-name="email"
       required
     ></v-text-field>
-    <v-text-field
-      v-model="phone"
-      label="Nomor ponsel / WA kamu"
-      :error-messages="errors.collect('phone')"
-      v-validate="'required'"
-      data-vv-name="phone"
-      required
-    ></v-text-field>
     <v-select
       v-bind:items="genderOptions"
       v-model="gender"
@@ -74,7 +66,7 @@ export default {
         'Perempuan'
       ],
       email: '',
-      phone: '',
+      phone: '-',
       isDeveloper: true,
       yearOfBirth: 0,
       dictionary: {
