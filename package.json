@@ -21,7 +21,7 @@
     "dotenv": "^5.0.1",
     "express": "^4.15.3",
     "js-cookie": "^2.2.0",
-    "nuxt": "^1.0.0",
+    "nuxt": "^3.0.0",
     "qs": "^6.5.2",
     "socket.io-client": "^2.1.0",
     "vee-validate": "^2.0.9",
@@ -34,10 +34,10 @@
     "cross-env": "^5.0.1",
     "env-cmd": "^7.0.0",
     "eslint": "^4.15.0",
-    "eslint-loader": "^1.7.1",
+    "eslint-loader": "^4.0.2",
     "eslint-plugin-vue": "^4.0.0",
     "nodemon": "^1.11.0",
     "stylus": "^0.54.5",
-    "stylus-loader": "^3.0.1"
+    "stylus-loader": "^7.1.0"
   }
 }
